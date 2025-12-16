@@ -1,51 +1,458 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <title>CTF #1 – Introduction</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem 3rem;
+        line-height: 1.6;
+        color: #222;
+        background: #f8fafc;
+      }
+
+      header {
+        border-bottom: 2px solid #e2e8f0;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: #0f4761;
+        margin-top: 1.5rem;
+      }
+
+      h1 {
+        font-size: 1.9rem;
+      }
+
+      h2 {
+        font-size: 1.4rem;
+      }
+
+      h3 {
+        font-size: 1.2rem;
+      }
+
+      p {
+        margin: 0.5rem 0 0.75rem;
+      }
+
+      ul {
+        margin: 0.5rem 0 0.75rem 1.5rem;
+      }
+
+      a {
+        color: #2563eb;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .tip {
+        font-family: Consolas, ui-monospace, SFMono-Regular, Menlo, Monaco,
+          "Liberation Mono", "Courier New", monospace;
+        font-weight: bold;
+        color: #b91c1c;
+      }
+
+      .screenshot {
+        margin: 1rem 0;
+        text-align: center;
+      }
+
+      .screenshot img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 6px;
+        box-shadow: 0 1px 4px rgba(15, 23, 42, 0.18);
+      }
+
+      .screenshot figcaption {
+        margin-top: 0.35rem;
+        font-size: 0.9rem;
+        color: #555;
+      }
+
+      code {
+        font-family: Consolas, ui-monospace, SFMono-Regular, Menlo, Monaco,
+          "Liberation Mono", "Courier New", monospace;
+        background: #e2e8f0;
+        padding: 0.1rem 0.3rem;
+        border-radius: 3px;
+        font-size: 0.95em;
+      }
+
+      .back-link {
+        margin-top: 2rem;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 1rem;
+        font-size: 0.95rem;
+      }
+    </style>
   </head>
   <body>
-    <h1>CTF #1: Introduction to Capture the Flag</h1>
+    <header>
+      <p><a href="/">← Back to ITC 101 home</a></p>
+      <h1>CTF Introduction #1</h1>
+    </header>
 
     <h2>Purpose</h2>
     <p>
-      In this assignment you’ll learn what CTFs are, how flags work, and how to
-      use picoCTF and its web shell to solve a simple challenge.
+      This document introduces Capture the Flags (CTFs), a popular
+      cybersecurity game which cybersecurity professionals use to develop and
+      test practical cybersecurity skills. A CTF will typically be split up
+      into several categories (for example: Cryptography, Web Exploitation,
+      Reverse Engineering, etc.) with challenges ranging in difficulty.
+    </p>
+    <p>
+      The end goal of a challenge is to collect a <strong>flag</strong>, which
+      is a plaintext code that indicates your completion of the challenge. We
+      will assign CTFs throughout the semester to test your knowledge of certain
+      topics and because they are fun!
     </p>
 
     <h2>What is a flag?</h2>
     <p>
-      A flag is a piece of text that proves you solved a challenge. In picoCTF,
-      flags look like <code>picoCTF{...}</code>.
+      The flag will typically be in the format:
+      <code>name{FLAG}</code>, with the <code>name</code> generally stemming
+      from the CTF name and the <code>FLAG</code> being a code or text placed
+      between the curly brackets.
     </p>
+    <p>
+      For our purposes, we will use <strong>picoCTF</strong>, a free online CTF
+      hosted every year that keeps some of its challenges up for practice.
+      However, there are many other CTFs for you to try! HackTheBox, Google,
+      SaintCon, and even BYU’s CSA (Cybersecurity Student Association) club host
+      CTFs, many of which also have challenges available year-round.
+    </p>
+    <p>
+      You will need to create a free picoCTF account at:
+      <a href="https://play.picoctf.org/register"
+        >https://play.picoctf.org/register</a
+      >.
+    </p>
+    <p>
+      Sign up using the relevant information (for example, your student email
+      and NetID). Remember your password because you will enter it into a
+      command line interface (the shell).
+    </p>
+    <p>Now we can start learning some technology and start CTFs!</p>
 
     <h2>Rules</h2>
-    <ul>
-      <li>Spend at least 15 minutes on each challenge before using hints.</li>
-      <li>
-        You can use the internet or AI tools, but use them to learn concepts,
-        not to just get the answer.
-      </li>
-      <li>Take ownership of your learning and experiment.</li>
-    </ul>
-
-    <h2>Example: First Grep on picoCTF</h2>
     <p>
-      In this example you’ll log in to picoCTF, open the <strong>First Grep</strong>
-      challenge, download the file using the web shell, and search it with
-      <code>grep</code> to find the flag.
+      Do not use walkthroughs or get help from peers until you have spent at
+      least <strong>15 minutes</strong> on each CTF. There are hints on
+      picoCTF that you can use, but do not use them until you are stuck.
+    </p>
+    <p>
+      You are encouraged to search the internet, ask your favorite LLM, or
+      discuss with peers, but do not have them just give you the answer.
+      Instead, have them explain concepts and technologies that are confusing so
+      that you can then make the needed intellectual jump to solve the CTF
+      challenge. In other words, <strong>take ownership of your learning!</strong>
     </p>
 
-    <!-- Example image – you'll hook this up in steps 2–3 -->
-    <!-- <img src="first-grep-page.png" alt="First Grep challenge page on picoCTF"> -->
-
-    <h2>Turning in CTF #1</h2>
+    <h2>Example CTF: First Grep</h2>
     <p>
-      When you complete the challenge, submit the flag in picoCTF and take a
-      screenshot showing your username, the challenge name, and the completed
-      icon. Paste that screenshot into the CTF #1 assignment on Learning Suite.
+      For our example, we are going to do the <strong>First Grep</strong>
+      challenge together as it shows various technologies you are going to use
+      for many challenges.
+    </p>
+    <p>
+      First, navigate to the challenge. Head to the
+      <strong>Practice</strong> tab and scroll to see the challenge. If it is
+      not there, search for it using the search bar on the left.
     </p>
 
-    <p><a href="/">← Back to ITC 101 home</a></p>
+    <figure class="screenshot">
+      <img src="image001.png" alt="picoCTF practice challenges list showing First Grep" />
+      <figcaption>Finding the First Grep challenge in picoCTF.</figcaption>
+    </figure>
+
+    <p>
+      Note that First Grep is faded for me with the green person icon in the
+      top right corner because I have already completed it. It should be more
+      visible with a gray person icon for you.
+    </p>
+    <p>Now click on it and you will see this:</p>
+
+    <figure class="screenshot">
+      <img src="image002.png" alt="First Grep challenge page" />
+      <figcaption>The First Grep challenge details page.</figcaption>
+    </figure>
+
+    <p>
+      For many challenges, you need to turn on the instance. Click the
+      <strong>Launch Instance</strong> button and more information will pop up,
+      including the link to the website. This is <em>not</em> necessary for
+      First Grep; there is no instance. This is what it would look like if you
+      needed to launch one:
+    </p>
+
+    <figure class="screenshot">
+      <img src="image003.png" alt="Example of an active picoCTF challenge instance" />
+      <figcaption>Example of a challenge that uses a launched instance.</figcaption>
+    </figure>
+
+    <p>Now, let’s read the description:</p>
+
+    <figure class="screenshot">
+      <img src="image004.png" alt="First Grep challenge description and download link" />
+      <figcaption>Description and file download link for First Grep.</figcaption>
+    </figure>
+
+    <p>
+      This description is telling us we are going to be looking for a flag
+      through a lot of information and gives us a link to download a file.
+    </p>
+
+    <h2>Using the web shell</h2>
+    <p>
+      We are going to use something called the <strong>web shell</strong> to do
+      this. A shell is a place where we can interact with an operating system,
+      in this case Linux. Since it is an operating system, we can download files
+      into a file system.
+    </p>
+    <p>
+      We want to use this shell to practice because we all need to learn Linux
+      commands as they are very important for your cybersecurity career! (Plus,
+      if you download the file onto your own system, sometimes you can find a
+      flag in an unintended way and will not learn anything.)
+    </p>
+    <p>The web shell is located on the right side of the screen:</p>
+
+    <figure class="screenshot">
+      <img src="image005.png" alt="picoCTF web shell button on challenge page" />
+      <figcaption>Opening the web shell from the challenge page.</figcaption>
+    </figure>
+
+    <p>
+      Click on it and it will prompt you to put in your username and password.
+      These are the same as when you log in to picoCTF.
+    </p>
+
+    <figure class="screenshot">
+      <img src="image006.png" alt="picoCTF web shell login prompt" />
+      <figcaption>Logging into the web shell with your picoCTF credentials.</figcaption>
+    </figure>
+
+    <p>When you are logged in, it should show something like this:</p>
+
+    <figure class="screenshot">
+      <img src="image007.png" alt="picoCTF web shell terminal view" />
+      <figcaption>The web shell after successfully logging in.</figcaption>
+    </figure>
+
+    <p>
+      It might look a little different for you depending on your username. But
+      now we have access to the shell.
+    </p>
+    <p>
+      The shell is one of the most powerful tools you will use in this entire
+      program and in your career. Use it often and learn it! (Disclaimer: the
+      shell provided by picoCTF has a lot of packages installed, so it may have
+      more functionality than your personal shell right now.)
+    </p>
+    <p>
+      To learn more about it, read:
+      <a href="https://primer.picoctf.com/#_the_shell"
+        >https://primer.picoctf.com/#_the_shell</a
+      >.
+    </p>
+
+    <p>
+      <span class="tip">TIP:</span> If you click the second icon in the bar, it
+      will pop out the shell into a new tab, giving you more space.
+    </p>
+
+    <figure class="screenshot">
+      <img src="image008.png" alt="picoCTF shell toolbar with pop-out icon" />
+      <figcaption>Use the toolbar icon to pop the shell into its own tab.</figcaption>
+    </figure>
+
+    <h2>Downloading the challenge file</h2>
+    <p>Ok, so we have this shell and the file. How do we get this file into the shell?</p>
+
+    <p>This is where the most important part of the CTF methodology comes into play:</p>
+
+    <p style="font-size: 1.2rem; font-weight: bold;">
+      YOU CAN USE GOOGLE / AI TO HELP YOU!!!
+    </p>
+
+    <p>
+      The most important part of CTFs is learning how to research to solve
+      problems. In the workforce, you will be solving problems you have never
+      seen before. Learning how to find answers is key!
+    </p>
+    <p>
+      In the shell, there are many commands that do different things. There is
+      probably a command to solve our problem. Let’s use Google.
+    </p>
+
+    <figure class="screenshot">
+      <img src="image009.png" alt="Google search for linux command to get file from internet" />
+      <figcaption>Searching for a Linux command to download a file.</figcaption>
+    </figure>
+
+    <p>
+      I typed <em>&quot;linux command to get file from internet&quot;</em>
+      because that’s what we need to do!
+    </p>
+
+    <p><span class="tip">Tip:</span> Remember to be specific when using Google or AI. If you type in garbage, you will get a garbage response.</p>
+
+    <figure class="screenshot">
+      <img src="image010.png" alt="Search result showing wget usage" />
+      <figcaption>Search results explaining the <code>wget</code> command.</figcaption>
+    </figure>
+
+    <p>It even tells us how to use it! Let’s go back to picoCTF.</p>
+
+    <p>Right-click the file link in the challenge and select <strong>Copy link address</strong>.</p>
+
+    <figure class="screenshot">
+      <img src="image011.png" alt="Right-click menu to copy file link" />
+      <figcaption>Copying the link to the challenge file.</figcaption>
+    </figure>
+
+    <p>
+      Now let’s head back to the shell. Type <code>wget</code> and then paste
+      the link address.
+    </p>
+    <p>
+      (Paste in a shell on Windows is <code>Ctrl + Shift + V</code>.
+      <code>Ctrl + V</code> means something different in a shell. You can also
+      right-click and choose Paste.)
+    </p>
+
+    <figure class="screenshot">
+      <img src="image012.png" alt="Using wget in the shell with the copied URL" />
+      <figcaption>Downloading the file in the web shell using <code>wget</code>.</figcaption>
+    </figure>
+
+    <p>
+      Press Enter to run the command. Then type <code>ls</code> (short for
+      <em>list</em>) to see all the files in the directory and you should see a
+      file named <code>file</code>.
+    </p>
+
+    <h2>Solving First Grep</h2>
+    <p>Now let’s actually do the challenge.</p>
+
+    <h3>Inspecting the file</h3>
+    <p>
+      In the description of the challenge, we are going to be going through a
+      lot of data. Let’s see what the file contains.
+    </p>
+    <p>
+      If you type <code>cat file</code>, this shows the text contained in the
+      file and... it’s a bunch of garbage.
+    </p>
+
+    <figure class="screenshot">
+      <img src="image013.png" alt="Output of cat file showing lots of random text" />
+      <figcaption>Viewing the file contents with <code>cat file</code>.</figcaption>
+    </figure>
+
+    <p>But we know that some command can help us. Which one though?</p>
+    <p><span class="tip">Tip:</span> The title of a CTF can be a hint on how to solve it.</p>
+
+    <p>
+      The title is <strong>First Grep</strong>... is there a command called
+      <code>grep</code>? Let’s look it up!
+    </p>
+
+    <figure class="screenshot">
+      <img src="image014.png" alt="Search results for linux grep command" />
+      <figcaption>Searching for information about the <code>grep</code> command.</figcaption>
+    </figure>
+
+    <p>There is a <code>grep</code> command, and it can search for patterns in files. That seems promising.</p>
+
+    <figure class="screenshot">
+      <img src="image015.png" alt="Documentation snippet explaining grep usage" />
+      <figcaption>Docs explaining how to use <code>grep</code>.</figcaption>
+    </figure>
+
+    <p>
+      Every flag on picoCTF starts with <code>picoCTF</code>, so let’s search
+      for that pattern in the file!
+    </p>
+
+    <figure class="screenshot">
+      <img src="image016.png" alt="Shell command using grep picoCTF file" />
+      <figcaption>Using <code>grep picoCTF file</code> to search for the flag.</figcaption>
+    </figure>
+
+    <p>
+      In the shell, type:
+      <code>grep picoCTF file</code> and press Enter.
+    </p>
+
+    <figure class="screenshot">
+      <img src="image017.png" alt="grep output showing the picoCTF flag" />
+      <figcaption>The flag found inside the file by <code>grep</code>!</figcaption>
+    </figure>
+
+    <p>That is the flag! Awesome work.</p>
+
+    <h2>Turning in CTFs</h2>
+    <p>Now we need to turn it in. Copy the flag from the shell.</p>
+    <p>
+      Go back to the picoCTF website and the First Grep challenge. You will see
+      a box to input the flag. When submitting flags, be sure to include the
+      <strong>whole flag</strong>, including the name and curly brackets, and
+      not just the contents.
+    </p>
+
+    <figure class="screenshot">
+      <img src="image018.png" alt="Flag submission box on the picoCTF challenge page" />
+      <figcaption>Submitting the flag in picoCTF.</figcaption>
+    </figure>
+
+    <p>
+      Paste it in and hit Submit. You have officially completed your first CTF!
+    </p>
+
+    <p>
+      When we have CTF assignments, submission will be a little weird, since the
+      flags change a little between runs.
+    </p>
+
+    <p>Go to the CTF #1 assignment in Learning Suite.</p>
+    <p>
+      To verify that you have completed the CTF, we will need a screenshot of
+      the completed screen like this:
+    </p>
+
+    <figure class="screenshot">
+      <img src="image019.png" alt="Completed challenge screen in picoCTF" />
+      <figcaption>
+        Make sure your username, the name of the challenge, and the completed
+        green icon are visible.
+      </figcaption>
+    </figure>
+
+    <p>
+      Make sure your username, the name of the challenge, and the completed
+      green person icon are in the frame.
+    </p>
+    <p>
+      Paste the screenshot into the assignment on Learning Suite and you are
+      officially done!
+    </p>
+
+    <div class="back-link">
+      <p><a href="/">← Back to ITC 101 home</a></p>
+    </div>
   </body>
 </html>
