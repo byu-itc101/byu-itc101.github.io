@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CTF #4: OSINT Tools</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem 3rem;
+        line-height: 1.6;
+        color: #222;
+        background: #f8fafc;
+      }
+
+      header {
+        border-bottom: 2px solid #e2e8f0;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: #0f4761;
+        margin-top: 1.5rem;
+      }
+
+      h1 {
+        font-size: 1.9rem;
+      }
+
+      h2 {
+        font-size: 1.4rem;
+      }
+
+      h3 {
+        font-size: 1.2rem;
+      }
+
+      p {
+        margin: 0.5rem 0 0.75rem;
+      }
+
+      ul,
+      ol {
+        margin: 0.5rem 0 0.75rem 1.5rem;
+      }
+
+      a {
+        color: #2563eb;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .tip {
+        font-family: Consolas, ui-monospace, SFMono-Regular, Menlo, Monaco,
+          "Liberation Mono", "Courier New", monospace;
+        font-weight: bold;
+        color: #b91c1c;
+      }
+
+      code {
+        font-family: Consolas, ui-monospace, SFMono-Regular, Menlo, Monaco,
+          "Liberation Mono", "Courier New", monospace;
+        background: #e2e8f0;
+        padding: 0.1rem 0.3rem;
+        border-radius: 3px;
+        font-size: 0.95em;
+      }
+
+      .back-link {
+        margin-top: 2rem;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 1rem;
+        font-size: 0.95rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <p><a href="/">← Back to ITC 101 home</a></p>
+      <h1>CTF #4: OSINT Tools</h1>
+      <p>IT&amp;C 101 - Intro to Cybersecurity</p>
+    </header>
+
+    <h2>Purpose</h2>
+    <p>
+      Open-Source Intelligence (OSINT) is widely used in the real world to
+      gather information from publicly available sources such as social media,
+      news articles, government reports, and websites. Penetration Tests start
+      with OSINT about a company, seeing if they can find any information about
+      the company, workers, or maybe information about security! Law enforcement
+      agencies use OSINT to track criminal activity, investigate fraud, and
+      locate suspects. You have probably used OSINT to “stalk” people’s
+      Instagram! This CTF is designed to teach you different real OSINT tools,
+      such as the Wayback Machine so that you can (ETHICALLY) use them in other
+      CTFs, real world engagements, or for fun!
+    </p>
+
+    <h2>WayBack Machine</h2>
+    <p>
+      The Way Back Machine is a tool built by the Internet Archive that takes
+      snapshots of websites as they once were for safekeeping, research,
+      journalism etc. It preserves the history of the Internet. We will be using
+      it to learn information about websites from a different time. Answer these
+      questions about various websites; there should be only one answer for
+      each.
+    </p>
+    <p>
+      <a href="https://web.archive.org/">https://web.archive.org/</a>
+    </p>
+
+    <h3>Questions</h3>
+    <ol>
+      <li>
+        Going back to March 2000 on www.iana.org, when exactly was the site last
+        updated? Answer with the date in the footer, eg 11-March-99
+      </li>
+      <li>
+        According to wikipedia.com snapshot taken on February 9, 2003, how many
+        articles were they already working on in the English version?
+      </li>
+      <li>
+        Going back to November 1998 on google.com, what address hosted the
+        non-alpha "Google Search Engine Prototype" of Google? Answer with the
+        full address, eg http://google.com
+      </li>
+      <li>
+        According to the paypal.com website in October 1999, what could you use
+        to "beam money to anyone"? Answer with the product name.
+      </li>
+    </ol>
+
+    <h2>Google Dorking</h2>
+    <p>
+      Google Dorking is a powerful feature in Google that allows people to focus
+      their Google searches using keywords and wildcards such as site, filetype,
+      inurl, AND, *, “quote” etc. This section is dedicated to getting you
+      familiar with the power of Google Dorking. Provided below are some cheat
+      sheets with Google Dorking keywords.
+    </p>
+    <ul>
+      <li>
+        <a href="https://cdn-cybersecurity.att.com/blog-content/GoogleHackingCheatSheet.pdf"
+          >https://cdn-cybersecurity.att.com/blog-content/GoogleHackingCheatSheet.pdf</a
+        >
+      </li>
+      <li>
+        <a href="https://gist.github.com/sundowndev/283efaddbcf896ab405488330d1bbc06"
+          >https://gist.github.com/sundowndev/283efaddbcf896ab405488330d1bbc06</a
+        >
+      </li>
+    </ul>
+
+    <h3>Questions</h3>
+    <ol>
+      <li>
+        On the byu.edu site, there is a pdf that shows Executive MBA calendar
+        for the class of 2027. For 2026, when is the Razor’s Edge Trip?
+      </li>
+      <li>
+        Our fellow cyber student Cameron created a wordpress.com website while
+        in the Czech Republic! Use Google Dorking to find the website that
+        contains the flag. The flag is in the format byuctf{}.
+      </li>
+    </ol>
+
+    <div class="back-link">
+      <p><a href="/">← Back to ITC 101 home</a></p>
+    </div>
+  </body>
+</html>

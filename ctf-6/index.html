@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CTF #6 – Encryption, Steganography, SQL Injection</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem 3rem;
+        line-height: 1.6;
+        color: #222;
+        background: #f8fafc;
+      }
+
+      header {
+        border-bottom: 2px solid #e2e8f0;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: #0f4761;
+        margin-top: 1.5rem;
+      }
+
+      h1 {
+        font-size: 1.9rem;
+      }
+
+      h2 {
+        font-size: 1.4rem;
+      }
+
+      h3 {
+        font-size: 1.2rem;
+      }
+
+      p {
+        margin: 0.5rem 0 0.75rem;
+      }
+
+      ul {
+        margin: 0.5rem 0 0.75rem 1.5rem;
+      }
+
+      a {
+        color: #2563eb;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .tip {
+        font-family: Consolas, ui-monospace, SFMono-Regular, Menlo, Monaco,
+          "Liberation Mono", "Courier New", monospace;
+        font-weight: bold;
+        color: #b91c1c;
+      }
+
+      code {
+        font-family: Consolas, ui-monospace, SFMono-Regular, Menlo, Monaco,
+          "Liberation Mono", "Courier New", monospace;
+        background: #e2e8f0;
+        padding: 0.1rem 0.3rem;
+        border-radius: 3px;
+        font-size: 0.95em;
+      }
+
+      .screenshot {
+        margin: 1rem 0;
+        text-align: center;
+      }
+
+      .screenshot img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 6px;
+        box-shadow: 0 1px 4px rgba(15, 23, 42, 0.18);
+      }
+
+      .screenshot figcaption {
+        margin-top: 0.35rem;
+        font-size: 0.9rem;
+        color: #555;
+      }
+
+      .back-link {
+        margin-top: 2rem;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 1rem;
+        font-size: 0.95rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <p><a href="/">← Back to ITC 101 home</a></p>
+      <h1>CTF #6 – Encryption, Steganography, SQL Injection</h1>
+    </header>
+
+    <h2>Challenges (picoCTF)</h2>
+    <ul>
+      <li>13</li>
+      <li>Vigenere</li>
+      <li>St3g0</li>
+      <li>SQLiLite</li>
+      <li>Extra Credit: More SQLi</li>
+    </ul>
+
+    <h2>CTF Feedback</h2>
+    <ul>
+      <li>More step-by-step walkthroughs.</li>
+      <li>The challenge is, how do I walkthrough without the answer? Ideas?</li>
+      <li>More challenging CTFs.</li>
+      <li>
+        I will try to add 1 or 2 more “Challenging Substitutions” related to what
+        we are talking about.
+      </li>
+      <li>But, I will NOT help you with these problems.</li>
+    </ul>
+
+    <h2>Caesar Cipher</h2>
+    <p>Change each letter of the alphabet to another a fixed number of places away.</p>
+    <figure class="screenshot">
+      <img src="caesar.png" alt="Caesar cipher wheel visual" />
+      <figcaption>Classic Caesar shift across the alphabet.</figcaption>
+    </figure>
+
+    <h2>Vigenere Cipher</h2>
+    <p>
+      A method of encrypting alphabetic text where each letter of the plaintext is encoded with a different Caesar cipher,
+      determined by the corresponding letter of a key.
+    </p>
+    <p>
+      For example, if the plaintext is “attacking tonight” and the key is oculorhinolaringology, then the first letter a of the
+      plaintext is shifted by 14 positions in the alphabet (because the first letter O of the key is the 14th letter of the
+      alphabet, counting from zero), yielding o; the second letter t is shifted by 2 (because the second letter C of the key is
+      the 2nd letter of the alphabet, counting from zero) yielding v; the third letter t is shifted by 20 (U) yielding n, with
+      wrap-around;
+    </p>
+    <p>Kryptos: an encoded message at CIA headquarters. The author used Vigenere ciphers.</p>
+    <figure class="screenshot">
+      <img src="vigenere.png" alt="Vigenere cipher table example" />
+      <figcaption>Vigenere shifts vary per key letter.</figcaption>
+    </figure>
+
+    <h2>Steganography</h2>
+    <p>Steganography: concealing info in other files within other non-secret data.</p>
+    <p>Data within data: data-ception.</p>
+    <figure class="screenshot">
+      <img src="steganography.png" alt="Steganography concept diagram" />
+      <figcaption>Hiding data inside an innocuous file.</figcaption>
+    </figure>
+
+    <h2>SQL Injection</h2>
+    <p>SQL Injection: code injection technique that allows hackers to access and manipulate data.</p>
+    <p>
+      When you provide login credentials, code is run to look up if your username and password exist and if the username and
+      password match.
+    </p>
+    <p>
+      Hacker will put in malicious code in login credentials that can ask and retrieve data from the database!!!
+    </p>
+    <figure class="screenshot">
+      <img src="sqlinjection.png" alt="SQL injection login example" />
+      <figcaption>Manipulating a login query to bypass checks.</figcaption>
+    </figure>
+
+    <h2>Hints for St3go, 13, and Vigenere</h2>
+    <ul>
+      <li>All: There may be online tools that can help.</li>
+      <li>St3g0: Also download the picture from St3g0 onto your device, not webshell. It may help.</li>
+      <li>Vigenere: The key, CYLAB, is a start. Start changing letters and see what happens.</li>
+    </ul>
+
+    <h2>Hints for SQLiLite #1</h2>
+    <ul>
+      <li>You want to login as admin.</li>
+      <li>Look up common SQL injection queries, you may find what you are looking for.</li>
+      <li>When you login, the SQL query is shown. See how you can change the query.</li>
+      <li>When you login, you might have to inspect some more.</li>
+    </ul>
+
+    <h2>Hints for 13, Vigenere, St3g0 #2</h2>
+    <ul>
+      <li>Websites:</li>
+      <li>13: <a href="https://cryptii.com/pipes/caesar-cipher">https://cryptii.com/pipes/caesar-cipher</a></li>
+      <li>Vigenere: <a href="https://cryptii.com/pipes/vigenere-cipher">https://cryptii.com/pipes/vigenere-cipher</a></li>
+      <li>St3g0: <a href="https://www.aperisolve.com/">https://www.aperisolve.com/</a></li>
+    </ul>
+
+    <h2>Hint #2 for SQLiLite</h2>
+    <ul>
+      <li>Comments in code are “skipped”.</li>
+      <li>Maybe we can comment out some code that verifies information.</li>
+    </ul>
+
+    <div class="back-link">
+      <p><a href="/">← Back to ITC 101 home</a></p>
+    </div>
+  </body>
+</html>
