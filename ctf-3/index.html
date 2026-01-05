@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>CTF #3 – Linux Part 2</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem 3rem;
+        line-height: 1.6;
+        color: #222;
+        background: #f8fafc;
+      }
+
+      header {
+        border-bottom: 2px solid #e2e8f0;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: #0f4761;
+        margin-top: 1.5rem;
+      }
+
+      h1 {
+        font-size: 1.9rem;
+      }
+
+      h2 {
+        font-size: 1.4rem;
+      }
+
+      h3 {
+        font-size: 1.2rem;
+      }
+
+      p {
+        margin: 0.5rem 0 0.75rem;
+      }
+
+      ul {
+        margin: 0.5rem 0 0.75rem 1.5rem;
+      }
+
+      ol {
+        margin: 0.5rem 0 0.75rem 1.5rem;
+      }
+
+      a {
+        color: #2563eb;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .tip {
+        font-family: Consolas, ui-monospace, SFMono-Regular, Menlo, Monaco,
+          "Liberation Mono", "Courier New", monospace;
+        font-weight: bold;
+        color: #b91c1c;
+      }
+
+      code {
+        font-family: Consolas, ui-monospace, SFMono-Regular, Menlo, Monaco,
+          "Liberation Mono", "Courier New", monospace;
+        background: #e2e8f0;
+        padding: 0.1rem 0.3rem;
+        border-radius: 3px;
+        font-size: 0.95em;
+      }
+
+      .screenshot {
+        margin: 1rem 0;
+        text-align: center;
+      }
+
+      .screenshot img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 6px;
+        box-shadow: 0 1px 4px rgba(15, 23, 42, 0.18);
+      }
+
+      .screenshot figcaption {
+        margin-top: 0.35rem;
+        font-size: 0.9rem;
+        color: #555;
+      }
+
+      .back-link {
+        margin-top: 2rem;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 1rem;
+        font-size: 0.95rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <p><a href="/">← Back to ITC 101 home</a></p>
+      <h1>CTF #3 – Linux Part 2</h1>
+      <p>IT&amp;C 101 - Intro to Cybersecurity</p>
+    </header>
+
+    <h2>Purpose</h2>
+    <p>
+      As an IT&amp;C student, Linux is fundamental to your cybersecurity career.
+      Linux is the most used operating system in business, as it is very
+      flexible to each business' needs.
+    </p>
+    <p>
+      We try to teach you the basics in this class, but you will learn way more
+      going on in this program and your career.
+    </p>
+    <p>
+      This CTF uses OverTheWire, a free website that teaches different
+      cybersecurity fundamentals with different wargames. The wargame we will be
+      using is Bandit, one designed to teach Linux commands.
+    </p>
+    <p>
+      But Windows computers will need to do some setup first. Mac users should
+      be able to run Linux commands natively. If you use a Mac or already have
+      WSL, skip to the Accessing the Lab section.
+    </p>
+
+    <h2>Windows Users: WSL Setup</h2>
+    <p class="tip">*** WINDOWS USERS PAY ATTENTION ***</p>
+    <p>
+      You natively do not have Linux on your computers, but you will when you
+      follow these instructions to download WSL (Windows Subsystem for Linux).
+      WSL creates a Linux filesystem and a place to run Linux commands in your
+      computer!
+    </p>
+    <ol>
+      <li>
+        If your computer is not fully up to date with the latest version of
+        Windows, do that now. WSL can brick if you are not up to date when you
+        download it. Your computer should restart after this update. If you are
+        up to date, move to step 2.
+      </li>
+      <li>
+        Now, open a Powershell terminal as administrator. Go into your app
+        explorer and type Powershell. Click Run as Administrator.
+      </li>
+    </ol>
+    <figure class="screenshot">
+      <img src="image001.png" alt="Opening PowerShell as administrator" />
+      <figcaption>Open PowerShell as administrator.</figcaption>
+    </figure>
+    <ol start="3">
+      <li>In your terminal, type <code>wsl --install</code> and Hit Enter.</li>
+    </ol>
+    <figure class="screenshot">
+      <img src="image002.png" alt="Running wsl --install" />
+      <figcaption>Running <code>wsl --install</code>.</figcaption>
+    </figure>
+    <ol start="4">
+      <li>Your computer should install WSL and restart.</li>
+      <li>Go back to the app explorer and type WSL.</li>
+    </ol>
+    <figure class="screenshot">
+      <img src="image003.png" alt="Searching for WSL after installation" />
+      <figcaption>Launch WSL after installation.</figcaption>
+    </figure>
+    <ol start="6">
+      <li>
+        Click on it, and you should be able to run Linux commands in the
+        terminal! (By default, it is an Ubuntu distribution of Linux)
+      </li>
+      <li>It should look something like this:</li>
+    </ol>
+    <figure class="screenshot">
+      <img src="image004.png" alt="Ubuntu shell in WSL" />
+      <figcaption>Ubuntu shell inside WSL.</figcaption>
+    </figure>
+    <p>
+      You may be prompted to create a sudo password. Sudo stands for super user
+      do and will allow you higher privileges to do more. CREATE A PASSWORD YOU
+      WILL REMEMBER!!!!
+    </p>
+    <p>
+      WSL install instructions (Microsoft):
+      <a href="https://learn.microsoft.com/en-us/windows/wsl/install"
+        >https://learn.microsoft.com/en-us/windows/wsl/install</a
+      >
+    </p>
+
+    <h2>Accessing the Lab</h2>
+    <h3>OverTheWire</h3>
+    <p>Here is the website to access the games, instructions and hints:</p>
+    <p>
+      <a href="https://overthewire.org/wargames/bandit/bandit0.html"
+        >https://overthewire.org/wargames/bandit/bandit0.html</a
+      >
+    </p>
+
+    <h3>SSH into Bandit</h3>
+    <p>
+      Now that you can use Linux commands, let's use SSH to connect to Bandit.
+      SSH stands for Secure Shell and allows us to login to remote computers.
+    </p>
+    <p>They give us:</p>
+    <ul>
+      <li>A username: <code>bandit0</code></li>
+      <li>A host: <code>bandit.labs.overthewire.org</code></li>
+      <li>A port (place where the process is running): <code>2220</code></li>
+      <li>And a password: <code>bandit0</code></li>
+    </ul>
+    <p>The command to connect is:</p>
+    <p><code>ssh bandit0@bandit.labs.overthewire.org -p 2220</code></p>
+    <figure class="screenshot">
+      <img src="image005.png" alt="SSH command" />
+      <figcaption>SSH command to access the 1st level.</figcaption>
+    </figure>
+    <p>
+      After SSH command, place to put password. When entering a password in a
+      terminal, it will not be visible, but it will be there when you type.
+      Press Enter to login after password attempt.
+    </p>
+    <figure class="screenshot">
+      <img src="image006.png" alt="Bandit password prompt" />
+      <figcaption>Bandit login prompt for the password.</figcaption>
+    </figure>
+    <figure class="screenshot">
+      <img src="image007.png" alt="Logged in as bandit0" />
+      <figcaption>Successful login attempt! I am now logged in as bandit0 on another computer!!</figcaption>
+    </figure>
+    <p>
+      As you complete levels, the username will change to correspond to the
+      level you are connecting to. Going to level 1 -> bandit1, Going to level 2
+      -> bandit2 and so forth. The host and port will not change. The thing that
+      changes the most is the password.
+    </p>
+
+    <h2>Objective</h2>
+    <p>
+      The point of each level is to find the password to the next level. The
+      password is a random set of characters and numbers.
+    </p>
+    <p>Example of a Password: <code>5ABMh1JI91bUIZZPXDqGanal4xvAg8J9</code></p>
+    <p>You will use the internet and your knowledge of Linux commands to solve these challenges.</p>
+    <p class="tip">PLEASE ASK FOR HELP!!! Your TAs are here for you!!</p>
+
+    <h2>Submission</h2>
+    <p>
+      You will be doing Level 0 to Level 4 -> Level 5. (The last password you
+      find will access Level 5)
+    </p>
+    <p>
+      You will submit a screenshot of your terminal in Bandit5 as well as a
+      document containing each level's passwords. Bandit does not save progress
+      so having a place where you can write the passwords down is KEY.
+    </p>
+    <figure class="screenshot">
+      <img src="image008.png" alt="Bandit5 terminal" />
+      <figcaption>Bandit5 Terminal.</figcaption>
+    </figure>
+    <figure class="screenshot">
+      <img src="image009.png" alt="Document with passwords" />
+      <figcaption>Document containing each level’s passwords.</figcaption>
+    </figure>
+
+    <h2>Tips</h2>
+    <ul>
+      <li>
+        On each webpage for each challenge, there might be useful links to
+        webpages that can help you. Use them!
+      </li>
+      <li>Use the TAs and our hours!</li>
+      <li>Use the internet</li>
+      <li>
+        The whatis command will give you a one-line description of a command of
+        your choosing.
+      </li>
+    </ul>
+    <figure class="screenshot">
+      <img src="image010.png" alt="Example of whatis on grep" />
+      <figcaption>Example of whatis on grep.</figcaption>
+    </figure>
+    <ul>
+      <li>
+        The man command (short for manual) will list out all the options and
+        ways you can modify a command to do specific things.
+      </li>
+    </ul>
+    <figure class="screenshot">
+      <img src="image011.png" alt="Grep man page" />
+      <figcaption>Example of the Grep man page.</figcaption>
+    </figure>
+    <ul>
+      <li>On Level 4, the file command is super nice</li>
+      <li><code>*</code> in Linux means all</li>
+    </ul>
+
+    <div class="back-link">
+      <p><a href="/">← Back to ITC 101 home</a></p>
+    </div>
+  </body>
+</html>
