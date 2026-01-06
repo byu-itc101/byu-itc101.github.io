@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lab 6 – Windows 10 System Hardening Lab</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem 3rem;
+        line-height: 1.6;
+        color: #222;
+        background: #f8fafc;
+      }
+
+      header {
+        border-bottom: 2px solid #e2e8f0;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: #0f4761;
+        margin-top: 1.5rem;
+      }
+
+      p {
+        margin: 0.5rem 0 0.75rem;
+      }
+
+      ul {
+        margin: 0.5rem 0 0.75rem 1.5rem;
+      }
+
+      .screenshot {
+        margin: 1rem 0;
+        text-align: center;
+      }
+
+      .screenshot img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 6px;
+        box-shadow: 0 1px 4px rgba(15, 23, 42, 0.18);
+      }
+
+      .screenshot figcaption {
+        margin-top: 0.35rem;
+        font-size: 0.9rem;
+        color: #555;
+      }
+
+      .back-link {
+        margin-top: 2rem;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 1rem;
+        font-size: 0.95rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <p><a href="/">← Back to ITC 101 home</a></p>
+      <h1>Windows 10 System Hardening Lab</h1>
+    </header>
+
+    <p><strong>Disclaimer:</strong> The enclosed PowerShell script and executable file will introduce vulnerabilities to a system upon execution for training purposes. Do not run this outside of a virtual environment.</p>
+    <p><strong>Disclaimer:</strong> This lab was provided by champlain-cyberlabs. Here is the link to the original lab: <a href="https://github.com/champlain-cyberlabs/cyberlabs/blob/main/docs/windows/system-hardening/system-hardening.md">https://github.com/champlain-cyberlabs/cyberlabs/blob/main/docs/windows/system-hardening/system-hardening.md</a></p>
+    <p><strong>This writeup has added a couple of lines to fix potential issues.</strong></p>
+    <p><strong>If your VM is not setup, go to <a href="https://github.com/Skid1254/101-OS-Hardening-Lab/blob/main/VMSetup.md">VMSetup.md</a> first before moving on.</strong></p>
+
+    <p><u>Requirements:</u></p>
+    <ul>
+      <li>Windows 10 virtual machine (VM) with network connectivity</li>
+      <li>System Hardening PowerShell script archive</li>
+    </ul>
+
+    <h2>Lab Setup</h2>
+    <p>
+      This lab provides you with a program to run to make a virtual machine
+      vulnerable. <strong>Do not run this outside of your virtual machine</strong>. This will
+      make the VM susceptible to attack.
+    </p>
+    <p>
+      When working with the provided script, warnings can be expected from a host
+      machine with anti-malware programs installed. These provided resources deal
+      with the same remote access tools that are often leveraged by threat actors
+      with malicious intent.
+    </p>
+    <p>
+      Before powering up the VM, take a snapshot of your virtual machine if
+      possible. This will allow you to revert it to a clean slate after
+      completing the lab, allowing you to reuse the same machine after this lab.
+    </p>
+    <p>Here is how to take a snapshot:</p>
+    <figure class="screenshot">
+      <img src="images/5161e9fc-5dec-4e51-b954-e52adc4174fa" alt="Taking a VM snapshot" />
+    </figure>
+
+    <h3>Windows 10 Setup</h3>
+    <p>This lab requires a Windows 10 workstation virtual machine.</p>
+
+    <p><u>PowerShell Script Steps:</u></p>
+    <p>
+      Extract system-hardening.ps1 inside your Windows VM. This can be done by
+      downloading the file inside the Virtual Machine. Go to this Github
+      repository in your VM through Microsoft Edge and download
+      system-hardening.ps1. You can download it by going to the file and press
+      the Download Raw File in the top right corner of the file. machine.
+    </p>
+    <p><strong>TA Note:</strong> If you download the scripts from Github, Microsoft Edge will flag this script as dangerous. You may have to click on the download and press keep to make it appear in your Downloads folder.</p>
+    <figure class="screenshot">
+      <img src="images/7430888f-a475-493c-b922-dca8ee2db27f" alt="Downloading system-hardening script" />
+    </figure>
+
+    <p>
+      Open PowerShell as an administrator. This can be done by right clicking on
+      the Windows icon in the bottom left corner and clicking <em>Windows PowerShell
+      (Admin)</em>:
+    </p>
+    <figure class="screenshot">
+      <img src="images/7dc7cebd-273c-4f60-b1ac-db2017328fa2" alt="Opening PowerShell as administrator" />
+    </figure>
+
+    <p>Disable Windows Defender and set the execution policy to allow the script to run:</p>
+    <figure class="screenshot">
+      <img src="images/a50edb1b-4a3f-4438-a7e4-f698c04daa54" alt="Disabling defender and setting execution policy" />
+    </figure>
+
+    <p>
+      Change directories to the folder containing the PowerShell script and
+      associated resource scripts. This will vary depending on the location of
+      the file and the username on the Virtual Machine. Run it with the
+      dot-backslash command:
+    </p>
+    <figure class="screenshot">
+      <img src="images/8f519b79-a227-4262-8d1e-49c838d2f959" alt="Changing directories to run script" />
+    </figure>
+    <figure class="screenshot">
+      <img src="images/e708e6ba-452b-447b-a90b-856d9a5cd0d0" alt="Running the hardening script" />
+    </figure>
+    <p><strong>TA Note</strong> Replace ./lab.ps1 with ./system-hardening.ps1</p>
+    <p>
+      <strong>Note:</strong> This PowerShell script is not intended to be reverse engineered to
+      find vulnerabilities on the system, but rather emulate an authentic
+      vulnerable environment that was caused by other means. This script can be
+      removed from the virtual machine after running to completion.
+    </p>
+
+    <h2>User Accounts</h2>
+    <p>After you ran the system-hardening script, your login screen should look like this:</p>
+    <figure class="screenshot">
+      <img src="images/25fed927-3921-41f9-8e84-8f96e6817939" alt="Login screen after hardening" />
+    </figure>
+    <p>Login as Zuko.</p>
+    <p>For this lab, this workstation belongs to one user:</p>
+    <ul>
+      <li>Zuko - Local Administrator
+        <ul>
+          <li>Username: <code>zuko</code></li>
+          <li>Password: <code>R0cks!</code></li>
+        </ul>
+      </li>
+      <li>Katara - Local User
+        <ul>
+          <li>Username: <code>katara</code></li>
+          <li>Password: <code>W@ter</code></li>
+        </ul>
+      </li>
+    </ul>
+    <p>
+      In this environment, Zuko is a local administrator. This lab will focus on
+      auditing local security policies on the host to harden system security.
+    </p>
+
+    <h2>Background</h2>
+    <p>
+      System hardening is one important step in keeping attackers out of a
+      system and protecting data. On Microsoft Windows, hardening can be done
+      with a few great Graphical User Interface (GUI) tools that can be extended
+      to larger environments. Many settings and configurations that are
+      discussed in this lab can be extended into a larger Active Directory
+      environment and applied to many machines at the same time.
+    </p>
+
+    <h2>Local Security Policy</h2>
+    <p>
+      Using Zuko’s account listed above, login to the VM and open up <em>Local
+      Security Policy Editor</em>. A link to this program has been created on the
+      desktop. This can be found by searching by name within the Windows task
+      bar.
+    </p>
+    <figure class="screenshot">
+      <img src="images/fedafd33-e9f1-41c8-89f2-842173b4ad96" alt="Local Security Policy shortcut" />
+    </figure>
+    <p>
+      Within the policy manager, settings are categorized into different types
+      of settings. Various settings within these categories will be modified to
+      improve the system’s overall security posture.
+    </p>
+    <figure class="screenshot">
+      <img src="images/36004f6a-64f4-4557-bed6-fd1ff54befc9" alt="Local Security Policy categories" />
+    </figure>
+
+    <h2>Local Password Policies</h2>
+    <p>
+      While administrators can check policies within the machine’s GUI using the
+      Local Security Policy editor tool shown above, the command line can be
+      used to identify basic settings even more quickly. This can be useful in
+      Windows Server Core installations where no GUI is available, or on remote
+      machines that are accessed over SSH or PowerShell Remoting. From an
+      administrator PowerShell or Command Prompt session, run the
+      <code>net accounts</code> command to view basic password policies on the local
+      machine:
+    </p>
+    <figure class="screenshot">
+      <img src="images/2a6e8004-2cad-4182-8543-437a0727cc81" alt="net accounts output" />
+    </figure>
+    <p>
+      Within the Local Security Policy editor, Underneath <em>Security Settings</em>,
+      expand <em>Account Policies</em> and click on <em>Password Policy</em>:
+    </p>
+    <figure class="screenshot">
+      <img src="images/87b2389b-e984-44ec-a6a3-f3b880a1b2b1" alt="Password Policy pane" />
+    </figure>
+    <p>
+      This pane contains some basic password policies on the local system and
+      mirrors a lot of information observed in the <code>net accounts</code> output
+      previously shown. On any of the policies displayed within rows in Local
+      Security Policy, a more detailed description with additional context can
+      be found by double-clicking on each item and going to the <em>Explain</em> tab:
+    </p>
+    <figure class="screenshot">
+      <img src="images/e16cad62-76d8-48f1-850d-ed15e23f3358" alt="Explain tab for password policies" />
+    </figure>
+    <p>
+      The various settings here will likely need to be tailored to fit a
+      specific organization's policies. The following settings with
+      accompanying rationales are explained below using the <a href="https://www.cisecurity.org/">CIS (Center for Internet Security)</a> benchmarks for Windows 10 version 1709. Updated guidelines can be found for various versions of Windows on the CIS website.
+    </p>
+    <ul>
+      <li>Enforce password history - 24 passwords remembered
+        <ul><li>forces users to keep using unique passwords when changed</li></ul>
+      </li>
+      <li>Maximum password age - 60 days (or less)
+        <ul><li>The longer a password is in use, the higher the risk of compromise by a brute force attack</li></ul>
+      </li>
+      <li>Minimum password age - 1 day (or more)
+        <ul><li>If a password’s minimum age is set to 0 days, the user can reset their own password many times in a short period of time and use the same password</li></ul>
+      </li>
+      <li>Minimum password length - 14 characters (or more)
+        <ul><li>A longer password is more difficult to guess in a dictionary or brute force attack</li></ul>
+      </li>
+      <li>Password must meet complexity requirements - Enabled
+        <ul><li>Passwords become more difficult to guess in an attack when more than just alphanumeric characters are used</li></ul>
+      </li>
+      <li>Store passwords using reversible encryption - Disabled
+        <ul><li>Password storage should be stored in a way that makes them less susceptible to compromise</li></ul>
+      </li>
+    </ul>
+    <p><strong>TAKE A SCREENSHOT OF SOMETHING YOU CHANGED!!!</strong></p>
+    <p>After modifying local password policies to meet CIS recommendations, the Local Security Policy editor should look like this:</p>
+    <figure class="screenshot">
+      <img src="images/383986cf-bc63-4e28-a2f8-0dde29cf4207" alt="Password policy after changes" />
+    </figure>
+
+    <h2>Account Lockout Policy</h2>
+    <p>
+      Under the following tab, click on <em>Account Lockout Policy</em>. The following
+      recommendations are again using CIS benchmarks:
+    </p>
+    <ul>
+      <li>Account lockout duration - 15 minutes (or more)
+        <ul>
+          <li>Prevents an attacker attempting to brute force passwords to an account</li>
+          <li>The following lockout settings will need to be enabled before duration settings can be set</li>
+        </ul>
+      </li>
+      <li>Account lockout threshold - 10 invalid logon attempts (or less but greater than 0)
+        <ul>
+          <li>Prevents an attacker attempting to brute force passwords to an account</li>
+          <li>Try changing this one first, it will allow you to change Account lockout duration</li>
+        </ul>
+      </li>
+      <li>Reset account lockout counter after - 15 minutes (or more)
+        <ul>
+          <li>Helps a user gain access to their own machine after accidental self-lockouts</li>
+        </ul>
+      </li>
+    </ul>
+    <p>After successfully applying these settings, this pane should look like the following:</p>
+    <figure class="screenshot">
+      <img src="images/46530678-1f3b-463a-9a0b-6ecaa210aef2" alt="Account lockout policy" />
+    </figure>
+
+    <h2>Local Audit Policy</h2>
+    <p>
+      Underneath <em>Local Policies -> Audit Policy</em>, security policies can be
+      configured to audit certain events. In Windows, system audits often mean
+      logging. While there are no recommendations made from CIS on these
+      settings, enabling auditing on events can help provide context around
+      potential security incidents. View the <em>Explain</em> tab on each setting to
+      familiarize yourself with information that each setting can provide.
+    </p>
+    <p>
+      Check <em>Success</em> and <em>Failure</em> on each setting to provide the most context
+      on events. Now, open a PowerShell window on the VM. Within the Windows
+      Event Viewer (found by typing in Event Viewer in Windows panel), process
+      creation events will now be shown in the Security log. Under the <em>Task
+      Category</em> Process Creation, the Security log should show the created
+      PowerShell process:
+    </p>
+    <p><strong>TA Note</strong> You may not see the Powershell Creation log, there are a lot.</p>
+    <figure class="screenshot">
+      <img src="images/c6df83e1-3d94-4610-9006-3102095dc1b6" alt="Event Viewer process creation log" />
+    </figure>
+
+    <h2>Local User Rights Assignment Policy</h2>
+    <p>
+      This policy contains settings related to user rights. This can be useful in
+      reducing the attack surface of a machine and preventing access to unneeded
+      services.
+    </p>
+    <ul>
+      <li>Access this computer from the network - none
+        <ul><li>As this is a local machine that is not accessed remotely or by other users, this setting can be disabled so no users can access it over a network. This will likely vary in a business where machines are managed remotely.</li></ul>
+      </li>
+      <li>Allow logon locally - remove “Guest”
+        <ul><li>The Guest account is a built-in feature to Windows that can leave a system insecure, as it allows anyone access to the local machine. In this use case, the Guest account is not needed.</li></ul>
+      </li>
+      <li>Allow log on through Remote Desktop Services - remove all
+        <ul><li>As a single machine that isn’t accessed remotely, there is no need for Zuko to access this computer using Remote Desktop Services. All users can be removed from this setting.</li></ul>
+      </li>
+    </ul>
+    <p>
+      Be cautious about modifying other settings in this pane, as some built-in
+      operating system features may be interrupted by misconfigurations.
+    </p>
+
+    <h2>Local Security Options Policy</h2>
+    <p>
+      This policy contains a wide array of settings that can help increase
+      security posture in various areas of the Operating System. Be cautious
+      when reading each policy, as phrases often contain double negatives. The
+      following settings can aid in further hardening Windows 10:
+    </p>
+    <ul>
+      <li>Accounts: Rename administrator account
+        <ul><li>This can help stop an attacker from guessing default passwords. By making the default Administrator account named to something different but memorable, an attacker may be stopped from running automated tools and slowed down.</li></ul>
+      </li>
+      <li>Accounts: Rename guest account
+        <ul>
+          <li>In addition to being disabled from previous settings, this can help throw off an attacker by using non-default account names.</li>
+          <li>Needs to be capitalized</li>
+        </ul>
+      </li>
+      <li>Interactive logon: Display user information when the session is locked - Do not display user information
+        <ul><li>Not displaying user information can be useful in preventing attackers from gathering information on a physical machine. If an attacker walks by a locked machine, not displaying basic account information can help protect against the initial stages of an attack.</li></ul>
+      </li>
+      <li>Interactive logon: Do not require CTRL+ALT+DEL - Disabled
+        <ul><li>Forcing the use of CTRL+ALT+DEL can help a user ensure that they are legitimately logging in when they type their credentials into their computer. This can help protect against phishing attacks, as a user will always need to use this combination of keys before logging on.</li></ul>
+      </li>
+      <li>Interactive logon: Don’t display last signed-in - Enabled</li>
+      <li>Interactive logon: Don’t display username at sign-in - Enabled</li>
+      <li>Interactive logon: Machine inactivity limit - 900 seconds (or less)</li>
+      <li>Interactive logon: Message text for users attempting to log on</li>
+      <li>Interactive logon: Message title for users attempting to log on</li>
+      <li>Interactive logon: Prompt user to change password before expiration - 5 to 14 days</li>
+    </ul>
+    <p><strong>TAKE A SCREENSHOT OF SOMETHING YOU CHANGED!!!!</strong></p>
+    <p>Restart you computer to see the changes in effect.</p>
+    <p>
+      After successfully setting these policies, a login screen should require a
+      CTRL+ALT+DELETE combination for logging in, and a custom message will be
+      displayed:
+    </p>
+    <figure class="screenshot">
+      <img src="images/d94acb75-8672-4292-8e01-341633d0a4b6" alt="Login screen requiring CTRL+ALT+DELETE" />
+      <figcaption>*CTRL + ALT + DELETE in VmWare is CTRL + ALT + INSERT*</figcaption>
+    </figure>
+    <p>
+      When logging in, no other previous users will be visible and the user name
+      will need to be specified before Zuko can login. This makes an attacker's
+      life with physical access to a machine more difficult.
+    </p>
+
+    <h2>Windows Security</h2>
+    <p>
+      Windows Security is a suite of security tools included with Windows 10
+      that holds many settings that can assist with system hardening. These
+      built-in features can help prevent malware from running, protect against
+      ransomware, and more. Search for <em>Windows Security</em> in the Windows taskbar
+      and go to <em>Virus &amp; threat protection</em>:
+    </p>
+    <figure class="screenshot">
+      <img src="images/57881a0e-2043-44f8-848f-2e5fc40efc9c" alt="Windows Security main view" />
+    </figure>
+    <p><strong>TA Note</strong>: If you see this:</p>
+    <figure class="screenshot">
+      <img src="images/375c6d70-545f-4fd5-80f9-0d1d257bd856" alt="Windows Security disabled" />
+    </figure>
+    <p>Here is how you fix it:</p>
+    <ol>
+      <li>Press Windows Key + R or search Run App in Taskbar to open run prompt</li>
+      <li>Type in regedit and Press OK</li>
+      <li>You will see 2 columns. On left column select HKEY_LOCAL_MACHINE</li>
+      <li>Next, navigate to Software, Policies, Microsoft, Windows Defender</li>
+      <li>Select the Windows Defender Folder, not the 2 other folders it contains</li>
+      <li>You should see a file named DisableAntiSpyware. Select it and right click it.</li>
+      <li>Change numerical value to 0 and hit OK then restart Windows Security.</li>
+      <li>This should fix your problem!</li>
+    </ol>
+
+    <p>
+      In this menu, scans can be performed against the system. This will scan a
+      number of directories against available virus signatures to try to detect
+      malware on the system. Underneath <em>Virus &amp; threat protection settings</em>,
+      click <em>Manage settings</em>. This has additional configurations for Windows
+      Defender.
+    </p>
+    <p>
+      In organizations handling sensitive data, the <em>Automatic sample submission</em>
+      setting should be turned off. If Defender recognizes a file as malicious
+      and uploads the file automatically to Microsoft, this could result in
+      unauthorized data disclosure. In order to protect against this, turn this
+      setting off:
+    </p>
+    <figure class="screenshot">
+      <img src="images/9ad02b04-8312-43b2-afdd-2f8f4c7564c6" alt="Automatic sample submission setting" />
+    </figure>
+    <p>The <em>Submit a sample manually</em> button can still be used to upload a suspect file.</p>
+    <p>Additionally, the Exclusions option can be configured to add any legitimate software that is detected by Defender:</p>
+    <figure class="screenshot">
+      <img src="images/9224cf02-a2f9-4b1b-8793-67f2eaf90453" alt="Exclusions settings" />
+    </figure>
+    <p>
+      This can be useful for a machine that is used by a penetration tester in
+      an organization or someone handling potentially malicious software. This
+      can also be abused by attackers, however, to add exclusions for malicious
+      software. Click <em>Add or remove exclusions</em>:
+    </p>
+    <figure class="screenshot">
+      <img src="images/26e589be-5953-4653-8709-ee4df97dacbb" alt="Add or remove exclusions" />
+    </figure>
+    <p>Remove this exclusion and run another quick scan. A threat should be detected:</p>
+    <figure class="screenshot">
+      <img src="images/920437ac-bc91-4eca-88f6-62f6da2172fa" alt="Threat detected after removal" />
+    </figure>
+    <p>
+      Click <em>Remove</em> and <em>Start actions</em> to remove the malware from the host. This
+      should remove the malicious software from the VM.
+    </p>
+    <p><strong>TA Note</strong> Due to the change in the registers if Quick Scan did not show up, the "malware" might not appear. Just move along. This affects nothing later. The file is not technically malware, it just should not be in that file.</p>
+
+    <h2>Ransomware protection</h2>
+    <p>
+      Under <em>Virus &amp; threat protection</em>, Microsoft Defender offers Ransomware
+      protection. This is a feature currently only available for Windows 10 Pro:
+    </p>
+    <figure class="screenshot">
+      <img src="images/ece05f10-853f-4cb9-9e3a-89204bbeef24" alt="Ransomware protection settings" />
+    </figure>
+    <p>
+      Click on <em>Controlled folder access</em>, and turn the setting on. By default,
+      this will stop file access in user directories from many applications in
+      order to prevent ransomware. For example, PowerShell’s <code>New-Item</code>
+      commandlet won’t be able to write to Zuko’s <code>Documents</code> folder:
+    </p>
+    <figure class="screenshot">
+      <img src="images/753e961a-9fca-4bb1-aa0e-0ed289c6fb5f" alt="Controlled folder access blocking PowerShell" />
+    </figure>
+    <p>This action will be logged in ransomware protection history in Defender:</p>
+    <figure class="screenshot">
+      <img src="images/d3d4ad50-4f50-4309-8646-fe12941527c7" alt="Ransomware protection history" />
+    </figure>
+    <p>
+      This can help prevent ransomware even if an unauthorized program is
+      executed on the victim machine.
+    </p>
+
+    <h2>Core Isolation</h2>
+    <p>
+      In Windows Security, navigate to <em>Device Security</em> and then click on
+      <em>Core isolation</em>. Memory integrity is one feature that can be turned on
+      to prevent certain processes from tampering with each other:
+    </p>
+    <figure class="screenshot">
+      <img src="images/536ac7cd-13d1-4de9-9634-f6f7e0bfddfb" alt="Core isolation settings" />
+    </figure>
+
+    <h2>Reputation-based protection</h2>
+    <p>
+      Reputation-based protection is a feature that is built-in to Microsoft
+      Edge that can prevent malicious sites from being accessed. Turn this
+      feature on underneath <em>App &amp; browser control</em>:
+    </p>
+    <figure class="screenshot">
+      <img src="images/83626c3f-850c-4d9a-8914-32521b0b71bb" alt="Reputation-based protection" />
+    </figure>
+
+    <h2>Windows Defender Firewall</h2>
+    <p>
+      The Windows Defender Firewall is a built-in feature that restricts network
+      connections inbound and outbound from a local machine. Default firewall
+      rules often suffice for individual workstations. Underneath <em>Firewall &amp;
+      network protection</em>, ensure that all network profiles are enabled:
+    </p>
+    <figure class="screenshot">
+      <img src="images/35573b94-2afb-4281-a42a-39d335802a89" alt="Firewall profiles enabled" />
+    </figure>
+    <p>
+      A link to Windows Defender Firewall with Advanced Security has been placed
+      on the VM's desktop. Open this to view all inbound and outbound network
+      traffic rules on the host. Many of these default inbound rules, such as
+      Skype, Xbox, and Cortana are for applications that are not used. Disabling
+      inbound rules can reduce the device’s attack surface over a network.
+      Similarly, outbound rules can also be disabled for any unused apps. Modify
+      these rules to only allow communications for approved applications.
+    </p>
+
+    <h2>User Account Control</h2>
+    <p>
+      User Account Control (UAC) is a feature in Windows that informs the user
+      prior to administrator privileges being used. When UAC is turned on,
+      opening a program as an administrator will be interrupted with a
+      confirmation message. This step can help interrupt malware from
+      successfully running on a system. To toggle this feature, search for
+      <em>user account control</em> in the Windows taskbar:
+    </p>
+    <figure class="screenshot">
+      <img src="images/dac47ce2-5a3f-42cd-b2dc-08c6dad32aee" alt="Searching for user account control" />
+    </figure>
+    <p>
+      There are various settings available to notify the user at different times
+      on a workstation. For most users, the second option from the top should
+      work:
+    </p>
+    <figure class="screenshot">
+      <img src="images/36f95dbf-5596-410b-bf0a-778d03f7b84e" alt="UAC settings slider" />
+    </figure>
+    <p>
+      After committing this change, try opening up an administrative PowerShell
+      session. You should now be greeted by User Account Control prompting for
+      confirmation before using administrator privileges:
+    </p>
+    <figure class="screenshot">
+      <img src="images/88d49874-a331-4a60-94d6-7cc934bb06ff" alt="UAC prompt" />
+    </figure>
+    <p><strong>TAKE A SCREENSHOT OF SOMETHING YOU CHANGED</strong></p>
+
+    <h2>Turn In Procedure</h2>
+    <p>
+      To turn in this lab, you will do a 2 paragraph writeup about what you
+      learned along with screenshots of what you did. Please include at least 3
+      screenshots of things you have changed.
+    </p>
+
+    <div class="back-link">
+      <p><a href="/">← Back to ITC 101 home</a></p>
+    </div>
+  </body>
+</html>

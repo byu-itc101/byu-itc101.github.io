@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lab 9 – HTML Lab</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem 3rem;
+        line-height: 1.6;
+        color: #222;
+        background: #f8fafc;
+      }
+
+      header {
+        border-bottom: 2px solid #e2e8f0;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: #0f4761;
+        margin-top: 1.5rem;
+      }
+
+      p {
+        margin: 0.5rem 0 0.75rem;
+      }
+
+      ul {
+        margin: 0.5rem 0 0.75rem 1.5rem;
+      }
+
+      code {
+        font-family: Consolas, ui-monospace, SFMono-Regular, Menlo, Monaco,
+          "Liberation Mono", "Courier New", monospace;
+        background: #e2e8f0;
+        padding: 0.1rem 0.3rem;
+        border-radius: 3px;
+        font-size: 0.95em;
+      }
+
+      .back-link {
+        margin-top: 2rem;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 1rem;
+        font-size: 0.95rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <p><a href="/">← Back to ITC 101 home</a></p>
+      <h1>IT&amp;C 101-HTML Lab</h1>
+      <p>
+        For this lab, you will create a simple “About Me” web page using HTML,
+        CSS, and JavaScript. The page should introduce yourself and your
+        interests. Or, you make an “About Me” page about a fictional character
+        of your choice or creation. If doing a fictional character, be sure to
+        indicate that somewhere on the page.
+      </p>
+      <p>
+        You may use any text editor to create the page though we recommend
+        Microsoft Visual Studio Code.
+      </p>
+    </header>
+
+    <h2>Part 1: Content</h2>
+    <p>
+      The page should have a title, a short introduction, and at least three
+      sections. Each section should have a heading and between one and three
+      short paragraphs. Potential sections are “Education”, “Interests”,
+      “Hobbies”, “Experience”, “Family”, “Achievements”, “Religion”, etc.
+    </p>
+    <p>
+      Be sure to use appropriate HTML tags to organize the content. Use
+      <code>&lt;h1&gt;</code> for the page title. Use <code>&lt;h2&gt;</code>,
+      <code>&lt;h3&gt;</code>, and so forth for section headings. Use
+      <code>&lt;p&gt;</code> for paragraphs. Use <code>&lt;em&gt;</code> and
+      <code>&lt;strong&gt;</code> to emphasize text.
+    </p>
+    <p>Here’s an empty page you can use as a starting point.</p>
+    <pre><code>&lt;!DOCTYPE html&gt;  
+&lt;html&gt; 
+  &lt;head&gt; 
+    &lt;title&gt;Tab title&lt;/title&gt;  
+  &lt;/head&gt; 
+  &lt;body&gt; 
+    &lt;!-- Content goes here. --&gt; 
+  &lt;/body&gt; 
+&lt;/html&gt; 
+</code></pre>
+    <p>Some tags you’re likely to use (beyond the structural ones in the empty page):</p>
+    <ul>
+      <li><code>&lt;h1&gt;</code>, <code>&lt;h2&gt;</code>, <code>&lt;h3&gt;</code>, etc.</li>
+      <li><code>&lt;p&gt;</code></li>
+      <li><code>&lt;em&gt;</code>, <code>&lt;strong&gt;</code></li>
+      <li><code>&lt;div&gt;</code>, <code>&lt;span&gt;</code></li>
+      <li><code>&lt;header&gt;</code>, <code>&lt;footer&gt;</code></li>
+    </ul>
+
+    <h2>Part 2: Style</h2>
+    <p>
+      Use CSS to make your page look good. Consider colors for headings,
+      margins, backgrounds, maximum width, borders, fonts, font styles, and so
+      forth. For this lab, put your style rules in a separate CSS page that you
+      link to your HTML page.
+    </p>
+    <p>Some properties you may consider using:</p>
+    <ul>
+      <li>color</li>
+      <li>background-color</li>
+      <li>font-family</li>
+      <li>font-size</li>
+      <li>margin</li>
+      <li>padding</li>
+      <li>border</li>
+      <li>border-radius</li>
+      <li>max-width</li>
+      <li>min-width</li>
+      <li>text-align</li>
+      <li>background-image</li>
+      <li>font-weight</li>
+      <li>text-decoration</li>
+      <li>width</li>
+      <li>text-align</li>
+      <li>text-shadow</li>
+    </ul>
+
+    <h2>Part 3: Action</h2>
+    <p>
+      Add at least one active element to your page using JavaScript. It may be
+      as simple as a greeting according to the time of day or as complicated as
+      animation or mouseover highlighting. Here are a couple of examples that
+      you can use. As JavaScript is an advanced topic, we only expect something
+      simple. Accordingly, you can paste in one of these if you choose.
+    </p>
+    <p>Show the date:</p>
+    <pre><code>&lt;p&gt;&lt;script&gt;document.write(new Date().toLocaleString())&lt;/script&gt;&lt;/p&gt;</code></pre>
+    <p>Greet the reader:</p>
+    <pre><code>&lt;p&gt;&lt;script&gt;  
+  document.write((new Date().getHours() &lt; 12) ? "Good morning!" : "Good 
+afternoon!")  
+&lt;/script&gt;&lt;/p&gt;</code></pre>
+
+    <h2>References</h2>
+    <p>Here are some valuable references to HTML, CSS, and JavaScript</p>
+    <ul>
+      <li>HTML Reference (W3Schools)</li>
+      <li>CSS Reference (W3Schools)</li>
+      <li>JavaScript Date Object</li>
+      <li>JavaScript document interface</li>
+    </ul>
+
+    <h2>Part 4: Publish on Github Pages</h2>
+    <ul>
+      <li><strong>Create a GitHub Repository</strong>:
+        <ul>
+          <li>Sign in to GitHub, click the + icon, and select New repository (make sure it is public).</li>
+          <li>Name your repository (e.g., "about-me-page") and click Create repository.</li>
+        </ul>
+      </li>
+      <li><strong>Upload Files</strong>:
+        <ul>
+          <li>In the repository, click Add file &gt; Upload files.</li>
+          <li>Upload both index.html and style.css.</li>
+          <li>Click Commit changes.</li>
+        </ul>
+      </li>
+      <li><strong>Enable GitHub Pages</strong>:
+        <ul>
+          <li>Go to Settings &gt; Pages.</li>
+          <li>Under Branch, select main or master, then click Save.</li>
+        </ul>
+      </li>
+      <li><strong>View Your Live Page</strong>:
+        <ul>
+          <li>GitHub will provide a URL (like https://yourusername.github.io/about-me-page/).</li>
+          <li>You can find the link under Deployments</li>
+          <li>Use this link to view your webpage live online.</li>
+        </ul>
+      </li>
+    </ul>
+
+    <h2>Part 5: Submission</h2>
+    <p>
+      Submit a screenshot of your webpage, a link to the page and write a short
+      paragraph detailing what skills you developed, and how these skills will
+      help you with cybersecurity.
+    </p>
+
+    <div class="back-link">
+      <p><a href="/">← Back to ITC 101 home</a></p>
+    </div>
+  </body>
+</html>

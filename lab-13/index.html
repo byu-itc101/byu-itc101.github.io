@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lab 13 – Cloud Computing</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem 3rem;
+        line-height: 1.6;
+        color: #222;
+        background: #f8fafc;
+      }
+
+      header {
+        border-bottom: 2px solid #e2e8f0;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: #0f4761;
+        margin-top: 1.5rem;
+      }
+
+      p {
+        margin: 0.5rem 0 0.75rem;
+      }
+
+      ul {
+        margin: 0.5rem 0 0.75rem 1.5rem;
+      }
+
+      pre {
+        background: #e2e8f0;
+        padding: 0.75rem;
+        border-radius: 4px;
+        overflow: auto;
+      }
+
+      code {
+        font-family: Consolas, ui-monospace, SFMono-Regular, Menlo, Monaco,
+          "Liberation Mono", "Courier New", monospace;
+      }
+
+      .back-link {
+        margin-top: 2rem;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 1rem;
+        font-size: 0.95rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <p><a href="/">← Back to ITC 101 home</a></p>
+      <h1>IT&amp;C 101 - Cloud Computing Lab</h1>
+      <p>
+        Submission template:
+        <a href="../assets/Lab13.pdf">assets/Lab13.pdf</a>
+      </p>
+    </header>
+
+    <h2>Overview</h2>
+    <p>
+      Before you start building your website you will need an HTML page with CSS
+      and Javascript. Y ou will have written this page the HTML lab where you
+      made an html page with inline CSS and Javascript.
+    </p>
+    <p>
+      With basic HTML, CSS, and JavaScript, you can just open the files in your
+      browser by dragging the HTML page into an open browser window.
+    </p>
+    <p>
+      However, you want other people to see your website, so you'll want a
+      better solution because you can't just open those files in a browser.
+    </p>
+
+    <h3>Functionality</h3>
+    <ul>
+      <li>Setup production environment in AWS</li>
+      <li>Serve a web page</li>
+      <li>Make accounts</li>
+    </ul>
+
+    <h3>Concepts</h3>
+    <ul>
+      <li>Cloud Environments</li>
+      <li>Configurations with web servers</li>
+      <li>Working with Remote Servers</li>
+    </ul>
+
+    <h3>Technologies</h3>
+    <ul>
+      <li>Docker</li>
+      <li>HTML</li>
+      <li>Linux</li>
+      <li>Apache</li>
+    </ul>
+
+    <h2>Step 1: Creating a GitHub Repository in VS Code</h2>
+    <p>
+      This guide walks you through the steps to create and publish a new GitHub
+      repository directly from Visual Studio Code (VS Code). We’ll cover both
+      using the VS Code Git UI and the integrated terminal.
+    </p>
+
+    <h3>Prerequisites</h3>
+    <ol>
+      <li>VS Code Installed (download from https://code.visualstudio.com/)</li>
+      <li>Git Installed (check with <code>git --version</code>)</li>
+      <li>GitHub Account</li>
+      <li>GitHub Authentication in VS Code (sign in to GitHub from VS Code)</li>
+    </ol>
+    <p>
+      If you dont know what Git or Github is:
+      Git is the tool you’ll use on your local machine to track every change you
+      make to your files. Whenever you “commit,” Git snapshots your project’s
+      state, so you can revisit, compare, or undo past work. You can also create
+      branches to experiment with new features without touching your main
+      code—then merge them back in when they’re ready. Because Git is
+      distributed, every student’s computer holds the full history, letting you
+      work offline, resolve conflicts when pulling or pushing changes, and
+      maintain a clean, organized timeline of who changed what and why.
+    </p>
+    <p>
+      GitHub builds on Git by providing a cloud-based home for your
+      repositories. Once you’ve committed locally, you “push” to GitHub to back
+      up your work and share it with classmates or instructors. On GitHub you
+      can open pull requests to propose changes, review code together, track
+      issues, and even automate testing with GitHub Actions. By authenticating
+      your GitHub account in VS Code, you get seamless sign-in, one-click
+      cloning of remote repos, and built-in support for creating and reviewing
+      pull requests—all without leaving your editor.
+    </p>
+    <p>
+      Video on Git/GitHub:
+      <a href="https://www.youtube.com/watch?v=i_23KUAEtUM&ab_channel=VisualStudioCode">https://www.youtube.com/watch?v=i_23KUAEtUM&ab_channel=VisualStudioCode</a>
+    </p>
+
+    <h3>Step 1.1: Create a New Folder / Project</h3>
+    <ol>
+      <li>Open VS Code.</li>
+      <li>Select File → Open Folder… (or Open… on macOS).</li>
+      <li>Create or select an empty folder where your new project will live.</li>
+      <li>In the Explorer pane, you should see your folder structure.</li>
+    </ol>
+
+    <h3>Step 1.2: Initialize a Local Git Repository</h3>
+    <p>You have two main options: using the VS Code Git UI or the integrated terminal.</p>
+    <p><strong>Option A: Using VS Code Git UI</strong></p>
+    <ol>
+      <li>Click the Source Control icon.</li>
+      <li>Click Initialize Repository.</li>
+      <li>VS Code runs <code>git init</code> and creates a <code>.git</code> folder.</li>
+      <li>Untracked changes will appear.</li>
+    </ol>
+    <p><strong>Option B: Using the Integrated Terminal</strong></p>
+    <ol>
+      <li>Open terminal (Ctrl+`).</li>
+      <li>Ensure you’re in the project folder.</li>
+      <li>Run <code>git init</code>.</li>
+    </ol>
+
+    <h3>Step 1.3: Copy Your Files into the Folder</h3>
+    <p>Copy your HTML file from the HTML lab into this folder.</p>
+
+    <h3>Step 1.4: Stage and Commit Your Changes</h3>
+    <p><strong>Option A: VS Code UI</strong></p>
+    <ol>
+      <li>Stage files (plus icon or Stage All).</li>
+      <li>Add a commit message.</li>
+      <li>Commit (checkmark).</li>
+    </ol>
+    <p><strong>Option B: Terminal</strong></p>
+    <ol>
+      <li><code>git add .</code></li>
+      <li><code>git commit -m "Initial commit"</code></li>
+    </ol>
+
+    <h3>Step 1.5: Create a New GitHub Repository (Remote)</h3>
+    <p><strong>Option A: Via GitHub Website</strong></p>
+    <ol>
+      <li>Go to https://github.com/new.</li>
+      <li>Name the repo, choose visibility, uncheck README.</li>
+      <li>Copy the provided <code>git remote add</code> / <code>git push</code> commands and run them in VS Code.</li>
+    </ol>
+    <p><strong>Option B: Using VS Code’s “Publish to GitHub”</strong></p>
+    <ol>
+      <li>Source Control menu → Publish to GitHub.</li>
+      <li>Select account, repo name/visibility.</li>
+      <li>VS Code runs remote add/push for you.</li>
+    </ol>
+
+    <h3>Step 1.6: Verify on GitHub</h3>
+    <ol>
+      <li>Visit your repo on GitHub.</li>
+      <li>Confirm files are present.</li>
+      <li>Manage issues/PRs as needed.</li>
+    </ol>
+
+    <h3>Step 1.7: Subsequent Changes</h3>
+    <ol>
+      <li>Edit files.</li>
+      <li>Stage/commit (<code>git add .</code> / <code>git commit -m "..."</code>).</li>
+      <li>Push (<code>git push</code>).</li>
+    </ol>
+
+    <h3>Quick Summary</h3>
+    <pre><code>git init
+git add .
+git commit -m "Initial commit"
+git remote add origin &lt;remote-URL&gt;
+git branch -M main
+git push -u origin main</code></pre>
+
+    <h2>Step 2: Make sure everything is Commited and Pushed to Github</h2>
+    <p>
+      Right now you have one place (a folder on your computer) where your code
+      lives. Eventually, there will be 3:
+    </p>
+    <ol>
+      <li>Your Development Environment (your personal computer or a lab computer)</li>
+      <li>GitHub (history of all changes and a place to collaborate with team members)</li>
+      <li>Your Production Environment (a server in the cloud)</li>
+    </ol>
+
+    <h2>Step 3: Set up your Production Environment</h2>
+    <h3>Setting up the Live Server on AWS</h3>
+    <p>Your Production Environments (Live Servers) will be hosted on Amazon Web Services (AWS).</p>
+    <h4>Using AWS Academy</h4>
+    <ol>
+      <li>Join AWS Academy classroom (contact TA if not received).</li>
+      <li>Follow the AWS Academy Learner Lab Student Guide.</li>
+    </ol>
+
+    <h4>Setting Up Your EC2 Instance</h4>
+    <ol>
+      <li>In AWS console: Services → Compute → EC2 → Instances.</li>
+      <li>Launch instances → Ubuntu Server 22.04 LTS (Free tier), t2.micro.</li>
+      <li>Create new key pair; save safely.</li>
+      <li>Allow HTTP and HTTPS traffic.</li>
+      <li>Launch instance and view it.</li>
+    </ol>
+
+    <h4>Connect to Your Instance</h4>
+    <p>Windows Users Only: move SSH key to WSL file system.</p>
+    <pre><code>cd /mnt/c/Users/&lt;your windows user name here&gt;/Downloads
+mv &lt;my ssh key file&gt;.pem ~/&lt;my ssh key file&gt;.pem
+cd ~ 
+sudo chmod 400 &lt;my ssh key file&gt;.pem</code></pre>
+    <p>Use the AWS “Connect” instructions (SSH client tab) to SSH into the instance.</p>
+
+    <h3>Install Apache2</h3>
+    <pre><code>sudo apt update -y && sudo apt upgrade -y
+sudo apt install apache2
+sudo service apache2 start
+sudo service apache2 status</code></pre>
+    <p>Verify via the instance Public IPv4 address (HTTP, not HTTPS).</p>
+
+    <h3>Clone your code</h3>
+    <ol>
+      <li>Copy your repo URL from GitHub.</li>
+      <li><code>cd /var/www</code></li>
+      <li><code>sudo chown -R $USER . && sudo chgrp -R $USER .</code></li>
+      <li><code>rm -rf html</code> (be careful!)</li>
+      <li><code>git clone &lt;repo URL&gt;</code></li>
+      <li><code>ln -s &lt;folder of your repo&gt; html</code></li>
+    </ol>
+
+    <h3>Change Default Config</h3>
+    <pre><code>cd /etc/apache2/sites-available
+sudo cp 000-default.conf it101_lab.conf
+sudoedit it101_lab.conf
+sudo a2dissite 000-default.conf
+sudo a2ensite it101_lab.conf
+sudo service apache2 reload</code></pre>
+
+    <h2>Step 4: Set up Accounts</h2>
+    <p>Edit to allow SSH password auth:</p>
+    <pre><code>sudo nano /etc/ssh/sshd_config.d/60-cloudimg-settings.conf
+# change PasswordAuthentication no -> yes
+sudo nano /etc/ssh/sshd_config
+# change PasswordAuthentication no -> yes, ensure PermitRootLogin prohibit-password</code></pre>
+
+    <p>Add Users and permissions (Bob, Alice, Shannon):</p>
+    <ul>
+      <li>Bob: sudo, SSH</li>
+      <li>Alice: SFTP only (no shell)</li>
+      <li>Shannon: SSH, restricted to /var/www/ files</li>
+    </ul>
+
+    <p>Helpful Commands:</p>
+    <pre><code>sudo adduser newusername
+sudo mkdir /home/username/.ssh
+sudo cp /home/ubuntu/.ssh/authorized_keys /home/username/.ssh/
+sudo chown -R username:username /home/username/.ssh
+sudo chmod 700 /home/username/.ssh
+sudo chmod 600 /home/username/.ssh/authorized_keys
+sudo usermod -aG sudo newusername
+sudo usermod -s /usr/sbin/nologin username
+sudo usermod -d /restricted/path username</code></pre>
+
+    <h3>Tips</h3>
+    <p>If you do not understand something or you aren't getting the results that you want, google it!!!</p>
+
+    <h2>Passoff Rubric</h2>
+    <ul>
+      <li>Screenshot of your working website.</li>
+      <li>Screenshot of all users permissions:</li>
+    </ul>
+    <pre><code>awk -F: '{print $1 "\t" $6 "\t" $7}' /etc/passwd | while read user home shell; do  
+    echo "User: $user"  
+    echo "  Home:  $home"  
+    echo "  Shell: $shell"  
+    echo "  Groups: $(id -nG $user 2>/dev/null)"  
+    echo ""  
+done</code></pre>
+    <p>This command will show you the users and their permissions. The output is what you should screenshot.</p>
+
+    <div class="back-link">
+      <p><a href="/">← Back to ITC 101 home</a></p>
+    </div>
+  </body>
+</html>

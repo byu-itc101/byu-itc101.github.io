@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lab 7 – Applied Cryptography</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem 3rem;
+        line-height: 1.6;
+        color: #222;
+        background: #f8fafc;
+      }
+
+      header {
+        border-bottom: 2px solid #e2e8f0;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: #0f4761;
+        margin-top: 1.5rem;
+      }
+
+      p {
+        margin: 0.5rem 0 0.75rem;
+      }
+
+      ul {
+        margin: 0.5rem 0 0.75rem 1.5rem;
+      }
+
+      .prompt {
+        font-weight: 600;
+      }
+
+      .placeholder {
+        color: #475569;
+        font-style: italic;
+        margin: 0.2rem 0 1rem;
+      }
+
+      .back-link {
+        margin-top: 2rem;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 1rem;
+        font-size: 0.95rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <p><a href="/">← Back to ITC 101 home</a></p>
+      <h1>Applied cryptography</h1>
+      <p><strong>Hash Functions</strong></p>
+      <p><strong>Lab: Verifying Integrity of a Download</strong></p>
+      <p>
+        In this assignment you will verify that a file you download has not been
+        changed during download. Go to the site
+        <a href="https://md5file.com/calculator">https://md5file.com/calculator</a>.
+        Take the four files and run them through the hash generator—you should
+        see that the md5 hash for File_1 was <code>e52bb268b3a9354195d85e907cf9c550</code>.
+      </p>
+      <p>
+        Now take the files 2-4 and check the hashes for them. You are looking
+        for the file that has the md5 hash of
+        <code>e286aa31b76d943fe17eb3daece39cb5</code>.
+      </p>
+      <p>
+        Lab files and template:
+        <a href="../assets/Lab7.zip">assets/Lab7.zip</a> and
+        <a href="../assets/Lab7.docx">assets/Lab7.docx</a>.
+      </p>
+    </header>
+
+    <h2>What to submit</h2>
+    <p>In the Word file, include your answers to the following:</p>
+    <ul>
+      <li>Which file had the matching md5 hash?</li>
+      <li>
+        What is your conclusion if the provided MD5 hash value is the same as
+        the one you calculated? Explain.
+      </li>
+      <li>
+        What is your conclusion if the provided MD5 hash value is different from
+        the one you calculated? Explain.
+      </li>
+      <li>
+        If the provided hash value is the same as the one you calculated, does
+        that mean that this is absolutely the right file that delivers what it
+        promises, or could it be malicious? Explain.
+      </li>
+      <li>
+        How could a second hash value (such as SHA256, in this case) help to
+        verify the integrity of the download? Explain.
+      </li>
+    </ul>
+
+    <h2>Part 2 – Public Key Cryptography</h2>
+    <p><strong>Lab: Public Key (Asymmetric) encryption</strong></p>
+    <p>
+      In this lab activity you will pair with a classmate and send each other
+      encrypted messages using a program called OpenSSL.
+    </p>
+
+    <h3>Part 1: Key Generation</h3>
+    <ul>
+      <li>
+        For Windows Users: You will have to use WSL instead of the normal
+        windows terminal since OpenSSL is already downloaded on WSL but not on
+        the windows terminal.
+      </li>
+      <li>For Mac Users OpenSSL is already on your computer in the normal terminal.</li>
+      <li>From now on the instructions should be the same for either mac or window users.</li>
+      <li>Somewhere on your computer create a folder named encryption.</li>
+      <li>
+        You will now create your Asymmetric keys. On your Terminal or WSL
+        navigate to the folder where you want your keys to appear.
+      </li>
+      <li>
+        Type in the command but replace the &lt;PRIVATE KEY NAME&gt; with whatever
+        you want your private key to be named.
+      </li>
+    </ul>
+    <p><code>openssl genpkey -algorithm RSA -out &lt;PRIVATE KEY NAME&gt;.pem -pkeyopt rsa_keygen_bits:4096</code></p>
+    <p>
+      You will now see the .pem file with your private key name. You will now
+      need to create your public key.
+    </p>
+    <p>In the same folder where your private key is run this command</p>
+    <p><code>openssl rsa -pubout -in &lt;PRIVATE KEY NAME&gt;.pem -out &lt;PUBLIC KEY NAME&gt;.pem</code></p>
+    <p>You should now have two .pem files in your folder</p>
+
+    <h3>Part 2: Encryption</h3>
+    <ul>
+      <li>
+        Start a text file and write your full name and a message for your
+        partner in this file. Save it as yournamePlain.txt. (For example, my
+        file would be yesemPlain.txt)
+      </li>
+      <li>
+        You can create this file by using the nano command followed by whatever
+        you want your file to be named for example “nano example.txt” would open
+        a blank file name example.txt that you can write things in. Create this
+        file in the same folder as your private and public keys.
+      </li>
+      <li>To encrypt this file in the same folder as your private key.</li>
+      <li>
+        Use the command
+        <code>openssl rsautl -encrypt -pubin -inkey &lt;YOUR PUBLIC KEY&gt;.pem -in &lt;YOUR TXT FILE NAME&gt;.txt -out &lt;ENCRYPTED FILE NAME&gt;.bin</code>
+      </li>
+      <li>This command should output a .bin file that is an encrypted version of your txt file.</li>
+      <li>Send the private key file to your partner via email along with the encrypted .bin file.</li>
+    </ul>
+
+    <h3>Part 3: Decryption</h3>
+    <p>
+      Upon receiving your partner’s encrypted message, you can now decrypt it
+      with their private key. A note that each partner needs to create public
+      and private keys encrypt a message and send both their encrypted message
+      and private key to their partner for decryption.
+    </p>
+    <ul>
+      <li>Put both your partners private key and their encrypted message in the same folder.</li>
+      <li>Open the terminal and navigate to that terminal. Run the command</li>
+    </ul>
+    <p><code>openssl rsautl -decrypt -inkey &lt;PRIVATE KEY NAME&gt;.pem -in &lt;ENCRYPTED FILE NAME&gt;.bin -out &lt;DECRYPTED FILE NAME&gt;.txt</code></p>
+    <p>
+      Find the decrypted file in your working directory and view the message.
+      Take a screenshot of the message to include in your submission.
+    </p>
+
+    <h3>What to submit (Parts 1–3)</h3>
+    <ul>
+      <li>Copy the screenshots you took in each part into this file. Include your and your partner’s names in the file. Label the screenshots Part 1, Part 2.</li>
+      <li>Provide answers to the following questions:</li>
+    </ul>
+    <ol>
+      <li>Explain the steps you took in decrypting the message from your partner.</li>
+      <li>
+        What information did you need from your partner? How did you obtain it?
+        Was it a good (secure) way to obtain the information? Explain.
+      </li>
+      <li>Why would someone use symmetric encryption instead of asymmetric encryption?</li>
+      <li>What advantages does asymmetric encryption instead of symmetric encryption?</li>
+      <li>If you wanted to send a confidential message to Bob, what key should you encrypt it with?</li>
+      <li>
+        Do you think you have a good understanding of how public key encryption/decryption works as a result of this activity? Why or why not?
+      </li>
+    </ol>
+
+    <h2>Part 3: Verifying Message Identity and Integrity</h2>
+    <p>
+      In this final section of the lab, you will apply the knowledge you've
+      gained to verify both the identity and integrity of received messages.
+      Within the provided lab zip file, you'll find three files:
+      secret_message_1 and secret_message_2 and secret_message_3. All these
+      files have been encrypted using my public key. Your task is to determine
+      which one contains the actual message by using my encrypted hash, also
+      known as my digital signature. This signature is included in the lab
+      materials. The Hash will be an MD5 version of the message. You can use the
+      website provided in the earlier section to get the hashes.
+    </p>
+
+    <h3>Summary</h3>
+    <ul>
+      <li>Which file was my message?</li>
+      <li>How can you know which one?</li>
+      <li>What did the message say?</li>
+      <li>Picture please!!!</li>
+    </ul>
+    <p>Also, answer the following questions, reflecting on your experience with this assignment:</p>
+    <ul>
+      <li>What was the most challenging part of this activity?</li>
+      <li>What was the most enjoyable part of this activity?</li>
+    </ul>
+
+    <div class="back-link">
+      <p><a href="/">← Back to ITC 101 home</a></p>
+    </div>
+  </body>
+</html>
