@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <title>Lab 4 – After Truth</title>
+    <title>Lab 4 – Information Operations Triage</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
       body {
@@ -29,22 +29,34 @@
         margin-top: 1.5rem;
       }
 
+      h1 {
+        font-size: 1.9rem;
+      }
+
+      h2 {
+        font-size: 1.4rem;
+      }
+
+      h3 {
+        font-size: 1.15rem;
+      }
+
       p {
         margin: 0.5rem 0 0.75rem;
       }
 
-      ul {
+      ul,
+      ol {
         margin: 0.5rem 0 0.75rem 1.5rem;
       }
 
-      .prompt {
-        font-weight: 600;
-      }
-
-      .placeholder {
-        color: #475569;
-        font-style: italic;
-        margin: 0.2rem 0 1rem;
+      code {
+        font-family: Consolas, ui-monospace, SFMono-Regular, Menlo, Monaco,
+          "Liberation Mono", "Courier New", monospace;
+        background: #e2e8f0;
+        padding: 0.08rem 0.35rem;
+        border-radius: 3px;
+        font-size: 0.95em;
       }
 
       .back-link {
@@ -58,74 +70,98 @@
   <body>
     <header>
       <p><a href="/">← Back to ITC 101 home</a></p>
-      <h1>Lab 4 – After Truth</h1>
+      <h1>Lab 4 – Information Operations Triage</h1>
+      <p>
+        <strong>Group Lab!</strong>
+      </p>
       <p>
         Submission template:
         <a href="../assets/Lab4.docx">assets/Lab4.docx</a>
+      </p>
+      <p>
+        Docket X:
+        <a href="../assets/Docket-X.zip">assets/Docket-X.zip</a>
+      </p>
+      <p>
+        Docket Y:
+        <a href="../assets/Docket-Y.zip">assets/Docket-Y.zip</a>
       </p>
     </header>
 
     <h2>Purpose</h2>
     <p>
-      The purpose of this activity is to consider how information can and is
-      weaponized. Sadly, we live in a world where there are many people who
-      inadvertently share misinformation or intentionally share disinformation.
-      For example, foreign governments run disinformation campaigns, often
-      called Foreign Information Manipulation and Interference (FIMI) to promote
-      their worldview in other countries. More locally, politicians and
-      companies can spread disinformation to promote their causes. It is
-      important to inoculate ourselves against such information attacks if we
-      are to see the world as it really is.
+      Practice rapid information-triage under pressure: Act as the Rapid
+      Credibility Assessment Cell (RCA) and triage artifacts to keep BYU users
+      safe from weaponized information.
     </p>
 
-    <h2>Procedure</h2>
+    <h2>Your Team’s Role</h2>
     <p>
-      Watch the documentary After Truth. You can access it via the library’s
-      Kanopy website. As you watch it, try not to focus on the specific
-      political messages, so much as the techniques that are used to deceive and
-      the reasons people are susceptible to deception. Once you have watched the
-      film, answer the questions below and upload a file to learningsuite with
-      the answers to the questions in them.
+      You are the Rapid Credibility Assessment Cell (RCA) supporting BYU OIT.
+      Your job is to quickly triage incoming artifacts, identify intent and
+      likely impact, recommend first verification steps, and decide whether to
+      dismiss, monitor, respond, or escalate. This lab has two scenarios for you
+      to choose between. Choose ONE docket to work on, along with up to TWO more
+      group members.
     </p>
 
-    <h2>Questions</h2>
-    <p class="prompt">
-      Describe a technique that disinformation spreaders used to achieve their
-      goals. For each one describe:
-    </p>
-    <ul>
-      <li>What was the adversary’s goal?</li>
-      <li>What technique(s) did they use to achieve their goal?</li>
-      <li>Why were the techniques effective or not effective in achieving their goal?</li>
-      <li>What ethical principle(s) did they violate?</li>
-    </ul>
-    <p class="placeholder">[Your response]</p>
-
-    <p class="prompt">Describe another technique using a different example.</p>
-    <ul>
-      <li>What was the adversary’s goal?</li>
-      <li>What technique(s) did they use to achieve their goal?</li>
-      <li>Why were the techniques effective or not effective in achieving their goal?</li>
-      <li>What ethical principle(s) did they violate?</li>
-    </ul>
-    <p class="placeholder">[Your response]</p>
-
-    <p class="prompt">
-      Share an example from your own life of misinformation or disinformation
-      that you are likely to be susceptible to by answering the following
-      sub-questions:
-    </p>
+    <h2>Mission Objectives</h2>
     <ul>
       <li>
-        Describe a scenario where someone may share disinformation that you might fall for.
+        Label each artifact as True/Verified, Misinformation, Disinformation,
+        Satire, or Unclear.
       </li>
-      <li>Why would you be more likely to be susceptible to this disinformation?</li>
-      <li>What could you do to be less likely to fall for it?</li>
+      <li>Infer the likely goal behind each artifact.</li>
+      <li>Note the influence techniques (TTPs) and red flags present.</li>
+      <li>Pick the safest first verification step for each artifact.</li>
+      <li>Assign a disposition (Dismiss, Monitor, Escalate, Respond).</li>
+      <li>State your confidence level.</li>
       <li>
-        Why is it particularly important for cybersecurity professionals to not be deceived by disinformation?
+        Build a short leadership brief covering top risks and user guidance.
       </li>
     </ul>
-    <p class="placeholder">[Your response]</p>
+
+    <h2>Rules of Engagement</h2>
+    <ul>
+      <li>Treat all artifacts as sensitive; do not share outside the scenario.</li>
+      <li>Assume screenshots can be edited, cropped, or out-of-context.</li>
+      <li>You are not expected to “know the truth” instantly.</li>
+      <li>Focus on process and reasoning—not guessing.</li>
+    </ul>
+
+    <h2>Assignment Workflow</h2>
+    <ol>
+      <li>
+        Open your assigned scenario packet (X or Y) and read the situation and
+        known facts.
+      </li>
+      <li>
+        Use the artifacts A1–A10 in your docket. For each artifact, complete the
+        worksheet menus: category, goal, TTPs, first verification step, and
+        disposition with confidence.
+      </li>
+      <li>
+        Complete required detail cards in the worksheet (deeper analysis) using
+        scenario evidence.
+      </li>
+      <li>
+        Produce a short leadership brief: top 3 risks, a 2–3 sentence user
+        advisory, and cyber-connection bullets.
+      </li>
+    </ol>
+
+    <h2>Deliverables</h2>
+    <ul>
+      <li>
+        Completed worksheet with triage decisions for A1–A10 (category, goal,
+        TTPs, verification step, disposition, confidence).
+      </li>
+      <li>Detail cards for required artifacts.</li>
+      <li>
+        Short leadership brief: top 3 risks, 2–3 sentence user advisory, and
+        cyber-connection bullets.
+      </li>
+    </ul>
 
     <div class="back-link">
       <p><a href="/">← Back to ITC 101 home</a></p>
