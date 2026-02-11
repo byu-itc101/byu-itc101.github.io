@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>HW 10 – Wireshark Exploration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem 3rem;
+        line-height: 1.6;
+        color: #222;
+        background: #f8fafc;
+      }
+
+      header {
+        border-bottom: 2px solid #e2e8f0;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: #0f4761;
+        margin-top: 1.5rem;
+      }
+
+      p {
+        margin: 0.5rem 0 0.75rem;
+      }
+
+      ul,
+      ol {
+        margin: 0.5rem 0 0.75rem 1.5rem;
+      }
+
+      code {
+        font-family: Consolas, ui-monospace, SFMono-Regular, Menlo, Monaco,
+          "Liberation Mono", "Courier New", monospace;
+        background: #e2e8f0;
+        padding: 0.08rem 0.35rem;
+        border-radius: 3px;
+        font-size: 0.95em;
+      }
+
+      .prompt {
+        font-weight: 600;
+      }
+
+      .placeholder {
+        color: #475569;
+        font-style: italic;
+        margin: 0.2rem 0 1rem;
+      }
+
+      .back-link {
+        margin-top: 2rem;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 1rem;
+        font-size: 0.95rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <p><a href="/">← Back to ITC 101 home</a></p>
+      <h1>Homework 10 – Wireshark Exploration</h1>
+      <p>IT&amp;C 101 - Intro to Cybersecurity</p>
+      <p>
+        Submission template:
+        <a href="../assets/HW10.docx">assets/HW10.docx</a>
+      </p>
+    </header>
+
+    <h2>Purpose</h2>
+    <p>
+      Networks are foundational to cybersecurity. This homework introduces
+      packet capture and packet analysis using Wireshark so you can understand
+      how network data moves and what protocol-level evidence looks like.
+    </p>
+
+    <h2>Download and Install</h2>
+    <p>
+      Download Wireshark:
+      <a href="https://www.wireshark.org/download.html"
+        >https://www.wireshark.org/download.html</a
+      >
+    </p>
+    <ul>
+      <li>Windows: download the x64 installer.</li>
+      <li>Mac: M1/M2 should use ARM; older Macs should use Intel.</li>
+      <li>Use default installer settings.</li>
+    </ul>
+
+    <h2>Objective</h2>
+    <p>
+      Create a packet capture (<code>.pcap</code>) and investigate packet
+      contents to build understanding of network protocols and encrypted traffic.
+    </p>
+    <p>
+      <strong>Disclaimer:</strong> Use Wireshark ethically. Do not capture
+      non-consenting parties' traffic or use packet analysis for unauthorized
+      activity.
+    </p>
+
+    <h2>Procedure</h2>
+    <h3>Packet Capture</h3>
+    <ol>
+      <li>Open Wireshark.</li>
+      <li>Double-click <strong>Wi-Fi</strong> (or your active interface) to start capture.</li>
+      <li>Open a browser and visit <code>byu.edu</code>.</li>
+      <li>Return to Wireshark and stop the capture.</li>
+    </ol>
+
+    <h3>Investigation</h3>
+    <p>
+      Click a packet and inspect packet list fields plus the Packet Details and
+      Packet Bytes panes.
+    </p>
+    <p class="prompt">
+      Question 1: What additional information can you learn from the Packet
+      Details pane?
+    </p>
+    <p class="placeholder">[Your response]</p>
+    <p class="prompt">
+      Question 2: How many packets did you capture, over what time span, and did
+      this surprise you? Why or why not?
+    </p>
+    <p class="placeholder">[Your response]</p>
+
+    <h3>Filtering and Search</h3>
+    <p>
+      Use the display filter bar to filter by protocol. Use
+      <code>Ctrl+F</code> (Windows) or <code>Command+F</code> (Mac) to search
+      packet content by string, hex, or regular expression.
+    </p>
+    <p class="prompt">
+      Question 3: Search for <code>byu.edu</code> as a string and find the
+      packet containing Client Hello (SNI = byu.edu). What is the destination IP
+      address?
+    </p>
+    <p class="placeholder">[Your response]</p>
+    <p class="prompt">
+      Question 4: Enter that destination IP in your browser. Where does it take
+      you, and why?
+    </p>
+    <p class="placeholder">[Your response]</p>
+
+    <h3>Streams</h3>
+    <p>
+      In Wireshark, go to <strong>Analyze &gt; Follow &gt; TCP Stream</strong>
+      to view one stream's packet content together.
+    </p>
+    <p class="prompt">
+      Question 5: Why can you not read much from TCP stream or packet payload
+      content? What is TLS?
+    </p>
+    <p class="placeholder">[Your response]</p>
+
+    <h2>Submission</h2>
+    <p>Turn in this file with your answers to Learning Suite.</p>
+
+    <div class="back-link">
+      <p><a href="/">← Back to ITC 101 home</a></p>
+    </div>
+  </body>
+</html>
