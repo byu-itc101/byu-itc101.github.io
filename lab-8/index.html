@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lab 8 – UFW Configuration Mini-Game</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem 3rem;
+        line-height: 1.6;
+        color: #222;
+        background: #f8fafc;
+      }
+
+      header {
+        border-bottom: 2px solid #e2e8f0;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: #0f4761;
+        margin-top: 1.5rem;
+      }
+
+      p {
+        margin: 0.5rem 0 0.75rem;
+      }
+
+      ul,
+      ol {
+        margin: 0.5rem 0 0.75rem 1.5rem;
+      }
+
+      code {
+        font-family: Consolas, ui-monospace, SFMono-Regular, Menlo, Monaco,
+          "Liberation Mono", "Courier New", monospace;
+        background: #e2e8f0;
+        padding: 0.1rem 0.3rem;
+        border-radius: 3px;
+        font-size: 0.95em;
+      }
+
+      pre {
+        background: #e2e8f0;
+        padding: 0.85rem 1rem;
+        border-radius: 6px;
+        overflow-x: auto;
+      }
+
+      pre code {
+        background: transparent;
+        padding: 0;
+      }
+
+      .note {
+        background: #e0f2fe;
+        border-left: 4px solid #0284c7;
+        padding: 0.85rem 1rem;
+        border-radius: 6px;
+      }
+
+      .back-link {
+        margin-top: 2rem;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 1rem;
+        font-size: 0.95rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <p><a href="/">← Back to ITC 101 home</a></p>
+      <h1>Uncomplicated Firewall (UFW) Configuration Mini-Game</h1>
+    </header>
+
+    <div class="note">
+      <p><strong>Scoring:</strong> There is no submission document for this lab.</p>
+      <p>
+        You will be given a VM with a scoring engine. Scores will be posted on
+        <a href="https://scoreboard.insite.cyberjousting.com/"
+          >scoreboard.insite.cyberjousting.com</a
+        >.
+      </p>
+    </div>
+
+    <h2>Overview</h2>
+    <p>
+      This mini-game introduces basic Linux firewall administration using UFW
+      and walks through a realistic security-first server configuration.
+    </p>
+
+    <h3>What is a Firewall?</h3>
+    <p>
+      A firewall is a software or hardware security device that monitors and
+      controls incoming and outgoing network traffic based on a set of security
+      rules. You can think of a firewall like a security gate:
+    </p>
+    <ul>
+      <li>It looks at each packet of data entering or leaving your computer.</li>
+      <li>It checks those packets against predefined rules.</li>
+      <li>It either allows or blocks the packet.</li>
+    </ul>
+    <p>
+      By default, most servers allow all traffic, which can expose them to
+      threats. Firewalls help you reduce your attack surface, prevent
+      unauthorized access, and monitor suspicious traffic.
+    </p>
+
+    <h3>How Do Firewalls Work?</h3>
+    <p>
+      A firewall intercepts data at the network level. Packets are small chunks
+      of data that computers send over the network and include headers with
+      details such as:
+    </p>
+    <ul>
+      <li>Source IP address</li>
+      <li>Destination IP address</li>
+      <li>Source and destination ports, such as 22 for SSH and 80 for HTTP</li>
+      <li>Protocol, such as TCP, UDP, or ICMP</li>
+    </ul>
+    <p>When a packet arrives:</p>
+    <ol>
+      <li>The firewall looks at its contents.</li>
+      <li>
+        Starting with the first rule, it compares the packet against your rule
+        list from top to bottom.
+      </li>
+      <li>
+        If a match is found, such as a rule allowing SSH on TCP port 22, the
+        packet is accepted.
+      </li>
+      <li>
+        If no allow match exists and you have a default deny, or if the packet
+        matches a deny rule, the packet is dropped.
+      </li>
+    </ol>
+
+    <h3>What Is a Default Deny Rule?</h3>
+    <p>
+      A default deny rule, also called an implicit deny, blocks any traffic not
+      explicitly allowed by earlier rules. It is typically placed at the bottom
+      of the rule set and is considered a best practice because it ensures that
+      only known and intended traffic is allowed.
+    </p>
+    <p>
+      This is different from an explicit deny rule, which you place somewhere
+      in your rules list to proactively block certain traffic before it reaches
+      a later allow rule.
+    </p>
+
+    <h3>What is UFW?</h3>
+    <p>
+      UFW, or Uncomplicated Firewall, is a user-friendly frontend for managing
+      <code>iptables</code> on Linux. Its primary purpose is to help you control
+      which incoming and outgoing network connections are allowed on your
+      computer without needing to write complicated firewall rules manually.
+    </p>
+
+    <h3>Why use UFW?</h3>
+    <ul>
+      <li>Easy setup for basic security</li>
+      <li>Simplifies complex firewall rules</li>
+      <li>
+        Provides numbered lists so you can insert or delete rules at specific
+        positions
+      </li>
+      <li>
+        Allows filtering by service, port, protocol, and even
+        source/destination IP
+      </li>
+    </ul>
+
+    <h3>What is iptables?</h3>
+    <p>
+      <code>iptables</code> is a powerful command-line utility that allows
+      system administrators to define the rules that control network traffic.
+      It is part of the Linux kernel and interacts with the netfilter
+      framework, which processes packets as they come into or leave the system.
+      With <code>iptables</code>, you can allow or block packets, forward them
+      to different networks, log traffic, and filter based on IP addresses,
+      ports, protocols, and more.
+    </p>
+    <p>
+      Although <code>iptables</code> is very capable, its raw commands can be
+      quite complex. UFW exists to simplify its use.
+    </p>
+
+    <h3>What is CIDR Notation?</h3>
+    <p>
+      CIDR stands for Classless Inter-Domain Routing. It is used to specify IP
+      address ranges in a compact format.
+    </p>
+    <p><code>172.16.72.0/24</code> means:</p>
+    <ul>
+      <li>IP range: <code>172.16.72.0</code> through <code>172.16.72.255</code></li>
+      <li>
+        <code>/24</code> means the first 24 bits are fixed as the network
+        portion and the remaining 8 bits are used for host addresses
+      </li>
+      <li>
+        This creates a subnet with 256 total IP addresses, 254 of them usable
+        for hosts
+      </li>
+    </ul>
+
+    <h2>Objectives</h2>
+    <p>
+      Your goal is to secure the server so that only the services that are
+      absolutely required are accessible to the right people. Specifically, you
+      want to allow public visitors to access the web service over HTTP and
+      HTTPS while ensuring that only trusted server administrators can log in
+      via SSH.
+    </p>
+    <p>In a real-world setup:</p>
+    <ul>
+      <li>
+        The public only needs access to your web application, typically on port
+        80 for HTTP and port 443 for HTTPS.
+      </li>
+      <li>
+        Server administrators need SSH access, usually on port 22, and that
+        access should be restricted to specific IP addresses or networks.
+      </li>
+      <li>
+        Other ports and services, such as databases, administrative panels, or
+        debugging tools, should not be publicly accessible at all.
+      </li>
+    </ul>
+    <p>
+      Leaving ports open that do not need to be open is a serious security
+      risk. Every open port is a potential entry point for attackers.
+    </p>
+    <p>
+      This lab also illustrates defense in depth. Even if an attacker somehow
+      obtains an SSH password, a properly configured firewall can still prevent
+      them from reaching the service at all.
+    </p>
+    <p>By the end of this mini-game, you will:</p>
+    <ul>
+      <li>Configure UFW with a default deny policy for incoming traffic</li>
+      <li>Allow HTTP and HTTPS so the public can view your website</li>
+      <li>Allow SSH, restricted so only administrators can connect</li>
+      <li>Practice inserting rules at specific positions</li>
+      <li>Practice blocking individual IPs</li>
+      <li>Practice specifying protocols such as TCP or UDP</li>
+    </ul>
+
+    <h2>Getting Started</h2>
+    <p>
+      You will receive a note with credentials to access your virtual machine.
+      This note includes:
+    </p>
+    <ul>
+      <li>The domain name of your VM</li>
+      <li>Your username</li>
+      <li>Your password</li>
+    </ul>
+
+    <h3>How to Access Your VM</h3>
+    <ol>
+      <li>Open a web browser.</li>
+      <li>
+        In the address bar, type the domain name exactly as provided, for
+        example <code>user1.insite.cyberjousting.com</code>.
+      </li>
+      <li>
+        When prompted in the popup, enter the username and password provided in
+        the slide from the presentation and press Enter.
+      </li>
+      <li>
+        You will then need to enter the username and password from the note you
+        have been given.
+      </li>
+    </ol>
+    <p>
+      Note: While typing the second password, you may not see any characters
+      appear. This is normal. Press Enter once you have finished typing.
+    </p>
+    <p>You should now be logged in to your virtual machine.</p>
+
+    <h2>Steps</h2>
+
+    <h3>Step 1: Check UFW Status</h3>
+    <p>
+      Before making any changes to your firewall rules, it is important to
+      understand the current status of UFW.
+    </p>
+    <p>Type this command and press Enter:</p>
+    <pre><code>sudo ufw status verbose</code></pre>
+    <p>
+      <code>sudo</code> stands for "super user do." It allows you to run
+      commands with elevated privileges, which are often required for
+      administrative tasks like configuring the firewall.
+    </p>
+    <p>
+      When you type a command with <code>sudo</code>, you might be prompted to
+      enter your password. This is a safety feature to ensure only authorized
+      users can make critical system changes.
+    </p>
+    <p>
+      This command displays UFW's current status and firewall rules. By default,
+      UFW is often inactive on a machine. If enabled, you might see output like
+      this:
+    </p>
+    <pre><code>Status: active
+Logging: on (low)
+Default: deny (incoming), allow (outgoing), disabled (routed)
+New profiles: skip</code></pre>
+    <p><strong>Status:</strong></p>
+    <ul>
+      <li>
+        <code>active</code> means UFW is enabled and enforcing its rules
+      </li>
+      <li>
+        <code>inactive</code> means UFW is installed but not running, so the
+        rules are not currently being applied
+      </li>
+    </ul>
+    <p><strong>Logging:</strong></p>
+    <p>
+      Logging shows whether UFW is recording connection attempts. Common values
+      include <code>off</code>, <code>low</code>, <code>medium</code>, and
+      <code>high</code>.
+    </p>
+    <p><strong>Default policies:</strong></p>
+    <ul>
+      <li>
+        <code>incoming</code>: the action UFW takes on incoming traffic that
+        does not match an allow rule
+      </li>
+      <li>
+        <code>outgoing</code>: the action UFW takes on outgoing traffic that
+        does not match a specific rule
+      </li>
+      <li>
+        <code>routed</code>: the action for routed packets, typically disabled
+        unless the server is acting as a router
+      </li>
+    </ul>
+    <p><strong>Other useful <code>ufw status</code> options:</strong></p>
+    <ul>
+      <li>
+        <code>sudo ufw status</code> for a quick summary of rules and the
+        enabled or disabled state
+      </li>
+      <li>
+        <code>sudo ufw status numbered</code> to display rules with line
+        numbers so you can delete or insert them at specific positions
+      </li>
+      <li>
+        <code>sudo ufw status verbose</code> for detailed output including
+        default policies, logging, and new profiles
+      </li>
+    </ul>
+
+    <h3>Step 2: Enable UFW and Set Default Rules</h3>
+    <p>Your company's security policy requires that:</p>
+    <ul>
+      <li>
+        All incoming connections are denied by default unless explicitly
+        permitted
+      </li>
+      <li>
+        All outgoing connections are allowed by default so the server can
+        communicate externally
+      </li>
+    </ul>
+    <p><strong>Why set default rules before enabling UFW?</strong></p>
+    <p>
+      It is important to configure these policies before turning the firewall on
+      because enabling UFW first may block legitimate traffic unexpectedly,
+      potentially locking you out of the server or disrupting services.
+    </p>
+    <p><strong>Why are these default policies considered best practice?</strong></p>
+    <ul>
+      <li>
+        Deny all incoming by default: this follows the principle of default
+        deny, meaning anything not explicitly allowed is blocked
+      </li>
+      <li>
+        Allow all outgoing by default: this allows the server to initiate
+        updates, API calls, and other normal outbound traffic without
+        unnecessary restrictions
+      </li>
+    </ul>
+    <p>Run the following commands:</p>
+    <pre><code>sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw allow ssh
+sudo ufw enable
+sudo ufw status verbose</code></pre>
+    <p>
+      The first two commands set the default policies for incoming and outgoing
+      traffic. The third command allows SSH traffic into the server. If you
+      omit this rule, you can lock yourself out of the server.
+    </p>
+    <p>
+      The fourth command activates UFW. You may see the warning
+      <code>Command may disrupt existing ssh connections</code>. Type
+      <code>Y</code> only if you have already run
+      <code>sudo ufw allow ssh</code>.
+    </p>
+    <p>
+      The last command checks the firewall status and confirms that the defaults
+      and active state are as expected.
+    </p>
+    <p><strong>What to expect:</strong></p>
+    <ul>
+      <li><code>Status: active</code> indicating UFW is enabled</li>
+      <li>Default policies set to deny incoming and allow outgoing</li>
+      <li>Logging settings and other details</li>
+    </ul>
+
+    <h3>Step 3: Allow Web and SSH Services</h3>
+    <p>
+      To make your server functional and accessible, you need to explicitly
+      allow certain incoming traffic through the firewall. For most web servers,
+      these include:
+    </p>
+    <ul>
+      <li>SSH for remote administrative access, usually on port 22</li>
+      <li>HTTP on port 80</li>
+      <li>HTTPS on port 443</li>
+    </ul>
+    <p><strong>Note about SSH:</strong></p>
+    <p>
+      In many Linux distributions, UFW includes predefined application profiles
+      and may have SSH allowed by default to prevent lockouts. However, you
+      have already allowed incoming SSH in the previous step. You should
+      explicitly allow SSH rather than relying on defaults so your access
+      remains intact even if the defaults change or are misconfigured.
+    </p>
+    <p>Allow these services with the following commands:</p>
+    <pre><code>sudo ufw allow http
+sudo ufw allow https</code></pre>
+    <p><strong>Different ways to allow traffic with UFW:</strong></p>
+    <ol>
+      <li>
+        By service name, such as <code>ssh</code>, <code>http</code>, or
+        <code>https</code>, which refers to predefined profiles
+      </li>
+      <li>By port number, useful when a service uses a non-standard port</li>
+      <li>By port and protocol, such as TCP or UDP</li>
+    </ol>
+    <p>Examples:</p>
+    <ul>
+      <li><code>sudo ufw allow ssh</code></li>
+      <li><code>sudo ufw allow 22</code></li>
+      <li><code>sudo ufw allow 80</code></li>
+      <li><code>sudo ufw allow 443</code></li>
+      <li><code>sudo ufw allow 22/tcp</code></li>
+      <li><code>sudo ufw allow 80/tcp</code></li>
+      <li><code>sudo ufw allow 443/tcp</code></li>
+    </ul>
+    <p><strong>Verify the rules:</strong></p>
+    <p>After allowing these services, check the current rule list:</p>
+    <pre><code>sudo ufw status numbered</code></pre>
+    <p>This will show a numbered list of active firewall rules.</p>
+
+    <h3>Step 4: Allow Traffic by IP Address</h3>
+    <p>
+      The rule you created earlier allows SSH connections from any IP address.
+      To improve security, you should restrict SSH access to trusted management
+      devices. In this lab, the trusted subnet is
+      <code>172.16.72.0/24</code>.
+    </p>
+    <p>
+      SSH uses the TCP protocol over port 22. Use the following command format
+      to allow only the trusted subnet to access the VM by SSH:
+    </p>
+    <pre><code>sudo ufw allow proto &lt;tcp|udp&gt; from &lt;IP Address&gt;/&lt;CIDR&gt; to any port &lt;Port Number&gt;</code></pre>
+    <p>For this lab, that becomes:</p>
+    <pre><code>sudo ufw allow proto tcp from 172.16.72.0/24 to any port 22</code></pre>
+    <p>
+      Note: Whenever you see something surrounded by
+      <code>&lt;&gt;</code>, replace the contents and the angle brackets with the
+      correct value. The <code>|</code> symbol means "or."
+    </p>
+    <p>
+      UFW processes rules top-down in order. If a previous rule already allows
+      SSH from anywhere, it will override the new restricted rule unless you
+      remove or reorder it.
+    </p>
+    <p>Check the current rule list with:</p>
+    <pre><code>sudo ufw status numbered</code></pre>
+    <p>
+      Look for an existing rule similar to one of these:
+    </p>
+    <pre><code>[1] SSH                        ALLOW IN    Anywhere
+[2] 22                         ALLOW IN    Anywhere</code></pre>
+    <p>
+      Your rules may look different, but look for entries with SSH or port 22.
+      Take note of the rule number for any SSH rule that allows access from any
+      IP. You will also need to remove the corresponding <code>(v6)</code>
+      rule if it appears.
+    </p>
+    <p>
+      To prevent all IPs from accessing the VM via SSH, delete the overly
+      permissive rule using its rule number:
+    </p>
+    <pre><code>sudo ufw delete &lt;Rule Number&gt;</code></pre>
+    <p>For example, if the rule was number 2:</p>
+    <pre><code>sudo ufw delete 2</code></pre>
+    <p>Check that only your intended SSH access rule remains:</p>
+    <pre><code>sudo ufw status numbered</code></pre>
+    <p>You should see a rule like:</p>
+    <pre><code>[3] 22                         ALLOW IN    172.16.72.0/24</code></pre>
+    <p>
+      Remember that after you delete a rule, the rules below it will be
+      renumbered.
+    </p>
+
+    <h3>Step 5: Blocking Malicious Traffic from a Specific IP Address</h3>
+    <p>
+      The network team has identified malicious activity coming from the IP
+      address <code>172.16.74.2</code>. To protect your system, you need to
+      block all traffic from this IP.
+    </p>
+    <p>Use the following command format:</p>
+    <pre><code>sudo ufw insert &lt;position&gt; deny proto &lt;tcp|udp|any&gt; from &lt;IP address&gt; to any</code></pre>
+    <p>
+      Position is the number where the rule will be inserted. Position 1 would
+      place the rule first, and position 2 would insert it after the current
+      first rule.
+    </p>
+    <p>
+      To block all protocols from <code>172.16.74.2</code>, make sure the deny
+      rule is evaluated before other allow rules.
+    </p>
+    <p><strong>Verify the rule:</strong></p>
+    <p>List all current rules with their numbers:</p>
+    <pre><code>sudo ufw status numbered</code></pre>
+    <p>
+      Ensure that the deny rule is listed above any allow rules that might
+      otherwise permit traffic from this IP. UFW processes rules top-down, so
+      the position of the deny rule is critical.
+    </p>
+
+    <h2>Final Check</h2>
+    <p>
+      At this point, your firewall configuration should meet the following
+      criteria:
+    </p>
+    <ul>
+      <li>UFW is enabled</li>
+      <li>
+        The default policy denies all incoming traffic and allows all outgoing
+        traffic
+      </li>
+      <li>Known malicious IPs such as <code>172.16.74.2</code> are blocked</li>
+      <li>Only trusted services are allowed</li>
+      <li>HTTP on port 80</li>
+      <li>HTTPS on port 443</li>
+      <li>
+        SSH on port 22, restricted to the management subnet
+        <code>172.16.72.0/24</code>
+      </li>
+    </ul>
+    <p>You can confirm these rules are in place by running:</p>
+    <pre><code>sudo ufw status numbered</code></pre>
+
+    <h2>Summary</h2>
+    <p>
+      In this lesson, you learned the essentials of basic Linux firewall
+      administration using UFW, including:
+    </p>
+    <ul>
+      <li>What UFW is and why it is a user-friendly firewall tool</li>
+      <li>How to enable UFW and set default policies</li>
+      <li>How to allow and deny traffic by service name</li>
+      <li>How to allow and deny traffic by port number</li>
+      <li>How to allow and deny traffic by protocol such as TCP or UDP</li>
+      <li>How to restrict SSH access to a trusted subnet using CIDR notation</li>
+      <li>How to block traffic from specific IP addresses</li>
+      <li>How to insert rules at specific positions</li>
+      <li>How to check firewall status</li>
+    </ul>
+
+    <div class="back-link">
+      <p><a href="/">← Back to ITC 101 home</a></p>
+    </div>
+  </body>
+</html>
