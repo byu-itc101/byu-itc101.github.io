@@ -1,0 +1,106 @@
+version: 1
+
+candidate:
+  name: "First Last"
+  pronouns: ""         # optional (e.g., "they/them")
+  headline: ""         # optional (e.g., "IT Support Student | Cybersecurity Fundamentals")
+  target_role: ""      # e.g., "Help Desk Technician", "SOC Intern", "IT Support Intern"
+
+contact:
+  email: "name@example.com"
+  phone: ""            # optional
+  location:
+    city: ""           # optional
+    state: ""          # optional
+    country: ""        # optional
+  links:
+    linkedin: ""       # optional
+    github: ""         # optional
+    portfolio: ""      # optional
+  # DO NOT include: SSN, student ID, full DOB, home street address
+
+summary:
+  # Write 3-5 raw bullet notes about what you want emphasized.
+  # Gemini will turn these into a resume-ready summary.
+  notes:
+    - ""
+    - ""
+    - ""
+
+core_skills:
+  # Include what you can explain or demonstrate.
+  technical:
+    operating_systems:
+      - ""             # e.g., "Windows 10/11"
+      - ""             # e.g., "Linux (Ubuntu)"
+    networking:
+      - ""             # e.g., "TCP/IP basics"
+      - ""             # e.g., "DNS/DHCP basics"
+    security:
+      - ""             # e.g., "MFA concepts"
+      - ""             # e.g., "basic incident response"
+    scripting_automation:
+      - ""             # e.g., "Python basics"
+      - ""             # e.g., "Bash basics"
+    tools:
+      - ""             # e.g., "Wireshark"
+      - ""             # e.g., "Git"
+  soft_skills:
+    - ""               # e.g., "Customer service"
+    - ""               # e.g., "Communication"
+    - ""               # e.g., "Teamwork"
+
+education:
+  - school: ""
+    location: ""       # optional
+    degree: ""         # e.g., "A.S. in Cybersecurity" / "Certificate"
+    start_date: ""     # e.g., "2024-08" (YYYY-MM preferred)
+    end_date: ""       # e.g., "2026-05" or "Present"
+    gpa: ""            # optional
+    relevant_coursework:
+      - ""             # e.g., "Introduction to Cybersecurity (ITC 101)"
+      - ""             # e.g., "Networking Fundamentals"
+    honors_awards:
+      - ""             # optional
+
+certifications:
+  # Use "In progress" if applicable.
+  - name: ""           # e.g., "CompTIA Security+"
+    status: ""         # e.g., "In progress" / "Earned"
+    date: ""           # e.g., "2026-03" (or blank)
+  # Add more items as needed
+
+experience:
+  # Include paid jobs, internships, volunteer roles, leadership roles, or relevant non-tech work.
+  - title: ""
+    organization: ""
+    location: ""       # optional
+    start_date: ""     # YYYY-MM preferred
+    end_date: ""       # YYYY-MM or "Present"
+    context: ""        # optional: 1 sentence about the environment (team size, customers, etc.)
+    responsibilities:
+      # Raw notes are fine. Gemini will rewrite these.
+      - ""
+      - ""
+    achievements:
+      # Add impact when you can. If unknown, use [ADD METRIC].
+      - ""             # e.g., "Resolved [ADD METRIC] support tickets per week with high satisfaction."
+      - ""             # e.g., "Improved process by ... resulting in ... [ADD METRIC]."
+    technologies_used:
+      - ""             # e.g., "Windows"
+      - ""             # e.g., "Active Directory"
+  # Add more roles as needed
+
+
+additional:
+  languages:
+    - ""               # optional (e.g., "Spanish - conversational")
+  work_authorization: ""  # optional (e.g., "Authorized to work in the U.S.")
+  availability: ""        # optional (e.g., "Available part-time during semester")
+
+redaction_preferences:
+  # Used later for generating resume_redacted.md/pdf
+  remove_phone: true
+  remove_city_state: false
+  remove_email: false      # set true if you want "Available upon request"
+  remove_links: false

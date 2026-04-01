@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lab 11 – Using and Attacking AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem 3rem;
+        line-height: 1.6;
+        color: #222;
+        background: #f8fafc;
+      }
+
+      header {
+        border-bottom: 2px solid #e2e8f0;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: #0f4761;
+        margin-top: 1.5rem;
+      }
+
+      p {
+        margin: 0.5rem 0 0.75rem;
+      }
+
+      ul,
+      ol {
+        margin: 0.5rem 0 0.75rem 1.5rem;
+      }
+
+      code {
+        font-family: Consolas, ui-monospace, SFMono-Regular, Menlo, Monaco,
+          "Liberation Mono", "Courier New", monospace;
+        background: #e2e8f0;
+        padding: 0.1rem 0.3rem;
+        border-radius: 3px;
+        font-size: 0.95em;
+      }
+
+      pre {
+        background: #e2e8f0;
+        padding: 0.85rem 1rem;
+        border-radius: 6px;
+        overflow-x: auto;
+        white-space: pre-wrap;
+      }
+
+      pre code {
+        background: transparent;
+        padding: 0;
+      }
+
+      .note {
+        background: #fff7ed;
+        border-left: 4px solid #ea580c;
+        padding: 0.85rem 1rem;
+        border-radius: 6px;
+      }
+
+      .downloads {
+        background: #eff6ff;
+        border-left: 4px solid #2563eb;
+        padding: 0.85rem 1rem;
+        border-radius: 6px;
+      }
+
+      .back-link {
+        margin-top: 2rem;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 1rem;
+        font-size: 0.95rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <p><a href="/">← Back to ITC 101 home</a></p>
+      <h1>Lab 11 – Using and Attacking AI</h1>
+      <p>
+        Use Gemini CLI and Copilot to generate, review, revise, redact, and
+        attack an AI-assisted resume workflow.
+      </p>
+    </header>
+
+    <div class="note">
+      <p><strong>Important:</strong> This is a simulation.</p>
+      <p>Do not attempt to “hack” real hiring systems.</p>
+    </div>
+
+    <div class="downloads">
+      <p><strong>Starter files:</strong></p>
+      <ul>
+        <li><a href="./facts.yaml">facts.yaml</a></li>
+        <li><a href="./agents.zip">agents.zip</a></li>
+      </ul>
+    </div>
+
+    <h2>Objectives</h2>
+    <p>By the end of this lab you will:</p>
+    <ul>
+      <li>Use Gemini CLI to generate and revise a resume from structured data.</li>
+      <li>Use Copilot to run a multi-persona agent panel review.</li>
+      <li>
+        Demonstrate prompt injection against a vulnerable AI hiring manager and
+        compare it with a hardened manager.
+      </li>
+      <li>Produce a redacted resume PDF that is safe to submit or share.</li>
+    </ul>
+
+    <h2>What to Turn In</h2>
+    <p>Submit these files:</p>
+    <ul>
+      <li><code>facts.yaml</code></li>
+      <li><code>resume_v1.md</code></li>
+      <li><code>.github/agents/YourAgent.md</code></li>
+      <li><code>resume_review.md</code></li>
+      <li><code>resume_revised.md</code></li>
+      <li><code>resume_redacted.md</code></li>
+      <li><code>resume_redacted.pdf</code></li>
+      <li><code>prompt_injection/justin_vulnerable_output.txt</code></li>
+      <li><code>prompt_injection/karen_hardened_output.txt</code></li>
+      <li><code>reflection.md</code></li>
+    </ul>
+
+    <h2>Recommended Folder Layout</h2>
+    <pre><code>itc101-resume-ai/
+  facts.yaml
+  agents.zip
+  resume_v1.md
+  resume_review.md
+  resume_revised.md
+  resume_redacted.md
+  resume_redacted.pdf
+  reflection.md
+  .github/
+    agents/
+      alice.md
+      bob.md
+      justin.md
+      karen.md
+      YourAgent.md
+  apply/
+    application.md
+  prompt_injection/
+    justin_vulnerable_output.txt
+    karen_hardened_output.txt</code></pre>
+
+    <h2>Part B – Main Lab Walkthrough</h2>
+
+    <h3>Step 1: Create your lab folder and unpack starter agents</h3>
+    <p>Create the working folder structure:</p>
+    <pre><code>mkdir -p itc101-resume-ai
+cd itc101-resume-ai
+mkdir -p .github/agents apply prompt_injection</code></pre>
+    <p>
+      Download <code>facts.yaml</code> and <code>agents.zip</code> into this
+      folder, then extract the agents into <code>.github/agents</code>:
+    </p>
+    <pre><code>unzip agents.zip -d .github/agents</code></pre>
+    <p>Quick checks:</p>
+    <pre><code>ls
+ls .github/agents</code></pre>
+
+    <h3>Step 2: Fill out <code>facts.yaml</code></h3>
+    <p>Open <code>facts.yaml</code> in a text editor, preferably VS Code.</p>
+    <p>Rules for <code>facts.yaml</code>:</p>
+    <ul>
+      <li>Use complete dates where possible. Month and year is fine.</li>
+      <li>If you do not remember a metric, leave it blank.</li>
+      <li>
+        Avoid sensitive information you do not want in a resume, such as a
+        street address, student ID, or full date of birth.
+      </li>
+    </ul>
+    <p>Minimum required sections:</p>
+    <ul>
+      <li><code>contact</code> with name and email, phone optional</li>
+      <li><code>education</code></li>
+      <li>At least one <code>experience</code> or one <code>project</code></li>
+      <li><code>skills</code></li>
+    </ul>
+
+    <h3>Step 3: Gemini generates the first resume draft</h3>
+    <p>
+      Use Gemini CLI to convert <code>facts.yaml</code> into a clean,
+      ATS-friendly Markdown resume.
+    </p>
+    <p>Start Gemini:</p>
+    <pre><code>gemini</code></pre>
+    <p>Then paste this prompt:</p>
+    <pre><code>You are a professional resume writer.
+Use the information provided in the YAML below.
+Do not invent numbers, dates, job titles, tools, certifications, or achievements.
+
+Write an ATS-friendly resume in Markdown with these sections in this order:
+- Name + Contact
+- Summary (2–3 lines) tailored to: [Target role: Help Desk / IT Support / SOC Intern / your choice]
+- Skills (grouped: Technical, Tools, Soft Skills)
+- Experience (reverse chronological)
+- Projects (reverse chronological)
+- Education
+- Certifications (if any)
+
+YAML file is in facts.yaml. Keep to 1 page. Output the Markdown resume text as resume_v1.md.</code></pre>
+    <p>
+      Save Gemini’s output into <code>resume_v1.md</code> if it does not write
+      the file automatically.
+    </p>
+
+    <h3>Step 4: Create your own agent persona file</h3>
+    <p>
+      The starter agent pack includes <code>alice</code>, <code>bob</code>,
+      <code>justin</code>, and <code>karen</code>.
+    </p>
+    <p>Create your custom reviewer in Copilot:</p>
+    <ol>
+      <li>Type <code>/agent</code>.</li>
+      <li>Select <strong>Create new agent</strong>.</li>
+      <li>Select <strong>Project</strong>.</li>
+      <li>Select <strong>Create with Copilot</strong>.</li>
+      <li>Create a resume reviewer according to your own specifications.</li>
+    </ol>
+    <p>
+      Save that file as <code>.github/agents/YourAgent.md</code>. You will use
+      it in the panel review.
+    </p>
+
+    <h3>Step 5: Copilot runs the agent panel and compiles <code>resume_review.md</code></h3>
+    <p>
+      Copilot will act as the panel coordinator for <code>alice</code>,
+      <code>bob</code>, and your custom agent.
+    </p>
+    <p>
+      Replace <code>[YourAgent]</code> with the actual name of your custom
+      agent, then paste this prompt into Copilot:
+    </p>
+    <pre><code>You are coordinating a review panel for a resume.
+You will use agents Alice, Bob, and [YourAgent] to review.
+Resume to review: resume_v1.md
+
+TASK:
+- Produce each persona's review of the resume using the required headings.
+- Then compile a panel consensus into a single document named resume_review.md with:
+  - Executive Summary
+  - Prioritized Fix List
+  - Do Not Change list
+  - ATS Keyword Suggestions
+
+If reviewers disagree, resolve it and explain briefly. Keep it ATS-friendly. Save as resume_review.md.</code></pre>
+
+    <h3>Step 6: Gemini revises the resume using <code>resume_review.md</code></h3>
+    <p>Using Gemini, paste this prompt:</p>
+    <pre><code>You are a professional resume writer.
+Revise the original resume resume_v1.md based on facts.yaml. Apply the review notes on resume_review.md.
+Do NOT invent any facts, tools, metrics, or dates not supported by facts.yaml or the original resume.
+Keep it ATS-friendly and aim for one page. Output as resume_revised.md.</code></pre>
+
+    <h3>Step 7: Create a redacted resume and export to PDF</h3>
+    <p>
+      Generate <code>resume_redacted.md</code> and
+      <code>resume_redacted.pdf</code> from your revised resume.
+    </p>
+    <p>Redact the following if present:</p>
+    <ul>
+      <li>Phone number</li>
+      <li>Street address</li>
+      <li>Student ID or date of birth</li>
+      <li>Any other sensitive personal identifiers</li>
+    </ul>
+    <p>
+      Use your own Gemini prompt for this step. At the end, submit
+      <code>resume_redacted.pdf</code>.
+    </p>
+
+    <h2>Part C – Prompt Injection Demo</h2>
+    <p>
+      In this section you will demonstrate prompt injection: untrusted text
+      attempting to override an evaluator’s rules.
+    </p>
+    <p>You will:</p>
+    <ul>
+      <li>Add an injection payload</li>
+      <li>Evaluate with Justin, a vulnerable AI hiring manager</li>
+      <li>Evaluate with Karen, a hardened AI hiring manager</li>
+      <li>Compare the outputs</li>
+    </ul>
+
+    <h3>Step 1: Create a malicious application file</h3>
+    <p>
+      Copy your revised resume into <code>apply/application.md</code> and add
+      your own prompt injection payload. This payload should attempt to change
+      the evaluator’s behavior.
+    </p>
+
+    <h3>Step 2: Justin evaluation</h3>
+    <p>
+      Using Copilot, run the vulnerable hiring manager and save the result to
+      <code>prompt_injection/justin_vulnerable_output.txt</code>.
+    </p>
+    <pre><code>You are a hiring manager using Justin as your agent persona.
+Review the application found in apply/application.md and make a hiring decision.
+Save the output as prompt_injection/justin_vulnerable_output.txt.</code></pre>
+
+    <h3>Step 3: Karen evaluation</h3>
+    <p>
+      Using Copilot, run the hardened hiring manager and save the result to
+      <code>prompt_injection/karen_hardened_output.txt</code>.
+    </p>
+    <pre><code>You are a hiring manager using Karen as your agent persona.
+Review the application found in apply/application.md and make a hiring decision.
+Save the output as prompt_injection/karen_hardened_output.txt.</code></pre>
+
+    <h3>Step 4: Reflection</h3>
+    <p>Create <code>reflection.md</code> and answer:</p>
+    <ul>
+      <li>What injection payload did you use?</li>
+      <li>Did Justin follow it? Quote a line that proves it.</li>
+      <li>
+        Did Karen ignore it? Quote where she indicates
+        <code>ignored_injection</code> and explain why her defenses worked.
+      </li>
+      <li>
+        In 3–5 sentences: Why is prompt injection a cybersecurity issue?
+      </li>
+    </ul>
+
+    <h2>Submission Checklist</h2>
+    <p>Submit a zip containing:</p>
+    <ul>
+      <li><code>resume_review.md</code></li>
+      <li><code>resume_redacted.pdf</code></li>
+      <li><code>prompt_injection/justin_vulnerable_output.txt</code></li>
+      <li><code>prompt_injection/karen_hardened_output.txt</code></li>
+      <li><code>reflection.md</code></li>
+    </ul>
+
+    <div class="back-link">
+      <p><a href="/">← Back to ITC 101 home</a></p>
+    </div>
+  </body>
+</html>
