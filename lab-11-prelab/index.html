@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Lab 11 Prelab – Install Gemini CLI and GitHub Copilot CLI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          sans-serif;
+        max-width: 900px;
+        margin: 2rem auto;
+        padding: 0 1rem 3rem;
+        line-height: 1.6;
+        color: #222;
+        background: #f8fafc;
+      }
+
+      header {
+        border-bottom: 2px solid #e2e8f0;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+      }
+
+      h1,
+      h2,
+      h3 {
+        color: #0f4761;
+        margin-top: 1.5rem;
+      }
+
+      p {
+        margin: 0.5rem 0 0.75rem;
+      }
+
+      ul,
+      ol {
+        margin: 0.5rem 0 0.75rem 1.5rem;
+      }
+
+      code {
+        font-family: Consolas, ui-monospace, SFMono-Regular, Menlo, Monaco,
+          "Liberation Mono", "Courier New", monospace;
+        background: #e2e8f0;
+        padding: 0.1rem 0.3rem;
+        border-radius: 3px;
+        font-size: 0.95em;
+      }
+
+      pre {
+        background: #e2e8f0;
+        padding: 0.85rem 1rem;
+        border-radius: 6px;
+        overflow-x: auto;
+        white-space: pre-wrap;
+      }
+
+      pre code {
+        background: transparent;
+        padding: 0;
+      }
+
+      .note {
+        background: #eff6ff;
+        border-left: 4px solid #2563eb;
+        padding: 0.85rem 1rem;
+        border-radius: 6px;
+      }
+
+      .warning {
+        background: #fff7ed;
+        border-left: 4px solid #ea580c;
+        padding: 0.85rem 1rem;
+        border-radius: 6px;
+      }
+
+      .screenshot {
+        margin: 1rem 0;
+        text-align: center;
+      }
+
+      .screenshot img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 6px;
+        box-shadow: 0 1px 4px rgba(15, 23, 42, 0.18);
+      }
+
+      .screenshot img.tall-500 {
+        max-height: 400px;
+        width: auto;
+      }
+
+      .screenshot img.short-250 {
+        max-height: 80px;
+        width: auto;
+      }
+
+      .screenshot figcaption {
+        margin-top: 0.35rem;
+        font-size: 0.9rem;
+        color: #555;
+      }
+
+      .back-link {
+        margin-top: 2rem;
+        border-top: 1px solid #e2e8f0;
+        padding-top: 1rem;
+        font-size: 0.95rem;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <p><a href="/">← Back to ITC 101 home</a></p>
+      <h1>Lab 11 Prelab – Install Gemini CLI and GitHub Copilot CLI</h1>
+      <p>
+        Use this page to install the two command-line AI tools required for
+        <a href="/lab-11/">Lab 11</a>.
+      </p>
+    </header>
+
+    <div class="warning">
+      <p>
+        These tools change over time. This page was written from the current
+        official installation docs, but if something here stops working, check
+        the official docs linked at the bottom.
+      </p>
+    </div>
+
+    <h2>Before You Start</h2>
+    <ul>
+      <li>
+        GitHub Copilot CLI requires access to GitHub Copilot. If your account
+        gets Copilot through an organization, the CLI must be enabled by that
+        organization.
+      </li>
+      <li>
+        Gemini CLI requires a Google account for the simplest sign-in flow.
+      </li>
+      <li>
+        If you install with <code>npm</code>, Copilot CLI requires Node.js 22+
+        and Gemini CLI requires Node.js 20+.
+      </li>
+    </ul>
+
+    <h2>GitHub Copilot CLI</h2>
+
+    <p>The official cross-platform npm method is:</p>
+    <pre><code>npm install -g @github/copilot</code></pre>
+
+
+    <p>An alternative way for <strong>Windows</strong> is using <code>winget</code>:</p>
+    <pre><code>winget install GitHub.Copilot</code></pre>
+    <p>An alternative way for <strong>MacOS</strong> is using Homebrew:</p>
+    <pre><code>brew install copilot-cli</code></pre>
+    <p>If you are having trouble installing, go to <strong>Frequently Asked Questions</strong>.</p>
+
+    <p>Start Copilot CLI:</p>
+    <pre><code>copilot</code></pre>
+    <div class="note">
+      <p>
+        If <code>copilot</code> is not found after installation, close and
+        reopen your terminal, then try again.
+      </p>
+    </div>
+    <p>
+      On first launch, if you are not signed in, Copilot will not allow you to send messages. You will need to authenticate your GitHub account.
+    </p>
+    <p>
+      In your browser, open your GitHub account, or make one if you have not
+      already.
+    </p>
+    <ol>
+      <li>Click your profile picture in the top right.</li>
+      <li>Open <strong>Copilot settings</strong>.</li>
+    </ol>
+    <figure class="screenshot">
+      <img
+        src="1.png"
+        alt="GitHub menu showing the Copilot settings option"
+        class="tall-500"
+      />
+      <figcaption>Open Copilot settings from your GitHub account menu.</figcaption>
+    </figure>
+    <p>
+      If Copilot is already enabled on your account, it should look like this:
+    </p>
+    <figure class="screenshot">
+      <img
+        src="2.png"
+        alt="GitHub Copilot enabled in account settings"
+        class="short-250"
+      />
+      <figcaption>Example of Copilot already enabled on an account.</figcaption>
+    </figure>
+    <p>
+      If it is not enabled yet, click <strong>Start using Copilot Free</strong>.
+    </p>
+    <figure class="screenshot">
+      <img src="3.png" alt="GitHub page showing the Start using Copilot Free button" />
+      <figcaption>Enable Copilot Free if it is not already active.</figcaption>
+    </figure>
+    <p>In your terminal with Copilot, run:</p>
+    <pre><code>/login</code></pre>
+    <p>When asked what account to log into, choose:</p>
+    <pre><code>1. GitHub.com</code></pre>
+    <p>
+      Press any key to open the browser and follow the authentication steps.
+      Remember to paste the one-time code when prompted. After completing the
+      login flow, you should now be able to send messages in Copilot CLI.
+    </p>
+
+    <h2>Gemini CLI</h2>
+
+    <p>The standard cross-platform install method uses <code>npm</code>:</p>
+    <pre><code>npm install -g @google/gemini-cli</code></pre>
+    <p>The alternative method for <strong>MacOS</strong> is using Homebrew:</p>
+    <pre><code>brew install gemini-cli</code></pre>
+    <p>If you are having trouble installing, go to <strong>Frequently Asked Questions</strong>.</p>
+    <p>Start Gemini CLI:</p>
+    <pre><code>gemini</code></pre>
+    <p>When prompted:</p>
+    <ol>
+      <li>Select <strong>Sign in with Google</strong>.</li>
+      <li>Continue by selecting <strong>1. Yes</strong>.</li>
+      <li>Select your Google account.</li>
+      <li>Continue to authenticate with Gemini.</li>
+    </ol>
+    <p>
+      Once authentication succeeds, press <code>R</code> to restart Gemini. You
+      can now send messages.
+    </p>
+
+    <h2>Frequently Asked Questions</h2>
+    <h3>What if I get a permissions error?</h3>
+    <p>
+      If that happens, try using <code>sudo</code> for the install command, and if
+      needed, when launching the tool:
+    </p>
+    <pre><code>sudo npm install -g @github/copilot
+sudo copilot
+
+sudo npm install -g @google/gemini-cli
+sudo gemini</code></pre>
+    <p>
+      Only do this if you actually hit a permissions error. On many systems it
+      will not be necessary.
+    </p>
+
+    <h3>What if the error mentions Node.js?</h3>
+    <p>
+      If the error mentions Node.js, you most likely need to install the
+      correct version. On WSL/MacOS/Linux systems, try:
+    </p>
+    <pre><code>sudo apt remove -y nodejs npm
+curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo bash -
+sudo apt install -y nodejs</code></pre>
+    <p>
+      Then retry the CLI installation steps above.
+    </p>
+
+    <h2>What You Should Have When Finished</h2>
+    <ul>
+      <li>GitHub Copilot CLI installed and able to start with <code>copilot</code></li>
+      <li>Gemini CLI installed and able to start with <code>gemini</code></li>
+      <li>Both tools authenticated in the terminal</li>
+    </ul>
+
+    <p><a href="/lab-11/">← Back to Lab 11</a></p>
+
+    <h2>Official References</h2>
+    <ul>
+      <li>
+        <a href="https://docs.github.com/en/copilot/how-tos/copilot-cli/install-copilot-cli"
+          >GitHub Copilot CLI installation docs</a
+        >
+      </li>
+      <li>
+        <a href="https://google-gemini.github.io/gemini-cli/docs/get-started/"
+          >Gemini CLI quickstart docs</a
+        >
+      </li>
+      <li>
+        <a href="https://github.com/google-gemini/gemini-cli"
+          >Gemini CLI GitHub repository</a
+        >
+      </li>
+    </ul>
+
+    <div class="back-link">
+      <p><a href="/">← Back to ITC 101 home</a></p>
+    </div>
+  </body>
+</html>
