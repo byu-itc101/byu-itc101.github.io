@@ -93,8 +93,7 @@
     </header>
 
     <div class="note">
-      <p><strong>Important:</strong> This is a simulation.</p>
-      <p>Do not attempt to “hack” real hiring systems.</p>
+      <p><strong>Important:</strong> This is a simulation. Do not attempt to “hack” real hiring systems.</p>
     </div>
 
     <div class="downloads">
@@ -117,29 +116,50 @@
       <li>Produce a redacted resume PDF that is safe to submit or share.</li>
     </ul>
 
-    <h2>What to Turn In</h2>
-    <p>Submit these files:</p>
-    <ul>
-      <li><code>facts.yaml</code></li>
-      <li><code>resume_v1.md</code></li>
-      <li><code>.github/agents/YourAgent.md</code></li>
-      <li><code>resume_review.md</code></li>
-      <li><code>resume_revised.md</code></li>
-      <li><code>resume_redacted.md</code></li>
-      <li><code>resume_redacted.pdf</code></li>
-      <li><code>prompt_injection/justin_vulnerable_output.txt</code></li>
-      <li><code>prompt_injection/karen_hardened_output.txt</code></li>
-      <li><code>reflection.md</code></li>
-    </ul>
+    <h2>Part A – Install prerequisites and prepare files</h2>
+    <p>
+      Before proceeding, you should have installed Gemini CLI and GitHub
+      Copilot CLI on your computer. If not, click here for an installation
+      guide.
+    </p>
+    <p>Open a terminal in your preferred working directory.</p>
 
-    <h2>Recommended Folder Layout</h2>
+    <h3>Create your lab folder and unpack starter agents</h3>
+    <p>Create the working folder structure:</p>
+    <pre><code>mkdir -p itc101-resume-ai
+cd itc101-resume-ai
+mkdir -p .github/agents apply prompt_injection</code></pre>
+    <p>
+      Download <code>facts.yaml</code> and <code>agents.zip</code> into this
+      folder, linked above, or run this command:
+    </p>
+    <pre><code>curl -O https://byu-itc101.github.io/lab-11/facts.yaml
+curl -O https://byu-itc101.github.io/lab-11/agents.zip</code></pre>
+    <p>Then extract the agents into <code>.github/agents</code>:</p>
+    <pre><code>unzip agents.zip -d .github/agents</code></pre>
+    <div class="note">
+      <p>
+        Agents are reusable AI personas with their own instructions. In this
+        lab, you will use them as specialized reviewers and evaluators so
+        different AI roles can look at the same files from different
+        perspectives.
+      </p>
+    </div>
+    <p>Quick checks:</p>
+    <pre><code>ls
+ls .github/agents</code></pre>
+
+    <h3>Recommended Folder Layout</h3>
+    <p>
+      At the end of this lab, this is probably what your lab folder will look
+      like:
+    </p>
     <pre><code>itc101-resume-ai/
   facts.yaml
   agents.zip
   resume_v1.md
   resume_review.md
   resume_revised.md
-  resume_redacted.md
   resume_redacted.pdf
   reflection.md
   .github/
@@ -154,25 +174,27 @@
   prompt_injection/
     justin_vulnerable_output.txt
     karen_hardened_output.txt</code></pre>
-
-    <h2>Part B – Main Lab Walkthrough</h2>
-
-    <h3>Step 1: Create your lab folder and unpack starter agents</h3>
-    <p>Create the working folder structure:</p>
-    <pre><code>mkdir -p itc101-resume-ai
-cd itc101-resume-ai
-mkdir -p .github/agents apply prompt_injection</code></pre>
     <p>
-      Download <code>facts.yaml</code> and <code>agents.zip</code> into this
-      folder, then extract the agents into <code>.github/agents</code>:
+      It is highly recommended to open Gemini and Copilot in <strong>different terminal windows</strong>:
     </p>
-    <pre><code>unzip agents.zip -d .github/agents</code></pre>
-    <p>Quick checks:</p>
-    <pre><code>ls
-ls .github/agents</code></pre>
+    <pre><code>gemini
+copilot</code></pre>
+    <p>
+      Make sure you are running Gemini and Copilot while in your working folder <code>itc101-resume-ai</code>.
+    </p>
+    <h2>Part B – AI-enabled resume builder</h2>
+    <p>
+      This part will teach you how you can use multiple AI tools to work on
+      files on your computer to do tasks. In this case, they will help you make
+      a customized resume.
+    </p>
 
-    <h3>Step 2: Fill out <code>facts.yaml</code></h3>
-    <p>Open <code>facts.yaml</code> in a text editor, preferably VS Code.</p>
+    <h3>Step 1: Fill out <code>facts.yaml</code></h3>
+    <p>Open <code>facts.yaml</code> in a text editor (like VS Code).</p>
+    <p>
+      Fill up the fields as if you are writing a resume. You can use a
+      fictional persona if you want to do that too.
+    </p>
     <p>Rules for <code>facts.yaml</code>:</p>
     <ul>
       <li>Use complete dates where possible. Month and year is fine.</li>
@@ -190,14 +212,10 @@ ls .github/agents</code></pre>
       <li><code>skills</code></li>
     </ul>
 
-    <h3>Step 3: Gemini generates the first resume draft</h3>
+    <h3>Step 2: Gemini generates the first resume draft</h3>
     <p>
       Use Gemini CLI to convert <code>facts.yaml</code> into a clean,
-      ATS-friendly Markdown resume.
-    </p>
-    <p>Start Gemini:</p>
-    <pre><code>gemini</code></pre>
-    <p>Then paste this prompt:</p>
+      ATS-friendly Markdown resume. In the terminal window with <strong>Gemini</strong> running, paste this prompt:</p>
     <pre><code>You are a professional resume writer.
 Use the information provided in the YAML below.
 Do not invent numbers, dates, job titles, tools, certifications, or achievements.
@@ -214,15 +232,19 @@ Write an ATS-friendly resume in Markdown with these sections in this order:
 YAML file is in facts.yaml. Keep to 1 page. Output the Markdown resume text as resume_v1.md.</code></pre>
     <p>
       Save Gemini’s output into <code>resume_v1.md</code> if it does not write
-      the file automatically.
+      the file automatically. In your working folder, you should see
+      <code>resume_v1.md</code>.
     </p>
+    <div class="note">
+      <p>Gemini may ask you to approve permissions. Say yes.</p>
+    </div>
 
-    <h3>Step 4: Create your own agent persona file</h3>
+    <h3>Step 3: Create your own agent persona file</h3>
     <p>
       The starter agent pack includes <code>alice</code>, <code>bob</code>,
-      <code>justin</code>, and <code>karen</code>.
+      <code>justin</code>, and <code>karen</code>. You will make your own agent that can review your resume for improvement.
     </p>
-    <p>Create your custom reviewer in Copilot:</p>
+    <p>In <strong>Copilot</strong>, create your custom reviewer agent:</p>
     <ol>
       <li>Type <code>/agent</code>.</li>
       <li>Select <strong>Create new agent</strong>.</li>
@@ -231,19 +253,21 @@ YAML file is in facts.yaml. Keep to 1 page. Output the Markdown resume text as r
       <li>Create a resume reviewer according to your own specifications.</li>
     </ol>
     <p>
-      Save that file as <code>.github/agents/YourAgent.md</code>. You will use
-      it in the panel review.
+      You can name your agent whatever you want! You will use it in the panel review in the next step.
     </p>
 
-    <h3>Step 5: Copilot runs the agent panel and compiles <code>resume_review.md</code></h3>
+    <h3>Step 4: Copilot runs the agent panel and compiles <code>resume_review.md</code></h3>
     <p>
-      Copilot will act as the panel coordinator for <code>alice</code>,
+      You will now use three AI agents to act as a "council" to review your resume. Copilot will act as the panel coordinator for <code>alice</code>,
       <code>bob</code>, and your custom agent.
     </p>
-    <p>
-      Replace <code>[YourAgent]</code> with the actual name of your custom
-      agent, then paste this prompt into Copilot:
-    </p>
+    <p>Paste this prompt into Copilot:</p>
+    <div class="note">
+      <p>
+        <strong>Important:</strong> Replace <code>[YourAgent]</code> below with
+        the actual name of your custom agent.
+      </p>
+    </div>
     <pre><code>You are coordinating a review panel for a resume.
 You will use agents Alice, Bob, and [YourAgent] to review.
 Resume to review: resume_v1.md
@@ -257,18 +281,22 @@ TASK:
   - ATS Keyword Suggestions
 
 If reviewers disagree, resolve it and explain briefly. Keep it ATS-friendly. Save as resume_review.md.</code></pre>
+    <p>
+      You should see the file <code>resume_review.md</code> in your working
+      folder.
+    </p>
 
-    <h3>Step 6: Gemini revises the resume using <code>resume_review.md</code></h3>
-    <p>Using Gemini, paste this prompt:</p>
+    <h3>Step 5: Gemini revises the resume using <code>resume_review.md</code></h3>
+    <p>Using <strong>Gemini</strong>, paste this prompt:</p>
     <pre><code>You are a professional resume writer.
 Revise the original resume resume_v1.md based on facts.yaml. Apply the review notes on resume_review.md.
 Do NOT invent any facts, tools, metrics, or dates not supported by facts.yaml or the original resume.
 Keep it ATS-friendly and aim for one page. Output as resume_revised.md.</code></pre>
+    <p>You should see the file <code>resume_revised.md</code> in your working folder.</p>
 
-    <h3>Step 7: Create a redacted resume and export to PDF</h3>
+    <h3>Step 6: Create a redacted resume and export to PDF</h3>
     <p>
-      Generate <code>resume_redacted.md</code> and
-      <code>resume_redacted.pdf</code> from your revised resume.
+      Using <strong>Gemini</strong>, generate <code>resume_redacted.pdf</code> from your revised resume.
     </p>
     <p>Redact the following if present:</p>
     <ul>
@@ -278,11 +306,11 @@ Keep it ATS-friendly and aim for one page. Output as resume_revised.md.</code></
       <li>Any other sensitive personal identifiers</li>
     </ul>
     <p>
-      Use your own Gemini prompt for this step. At the end, submit
-      <code>resume_redacted.pdf</code>.
+      Use your own Gemini prompt for this step. You should have
+      <code>resume_redacted.pdf</code> ready for submission.
     </p>
 
-    <h2>Part C – Prompt Injection Demo</h2>
+    <h2>Part C – Simple Prompt Injection</h2>
     <p>
       In this section you will demonstrate prompt injection: untrusted text
       attempting to override an evaluator’s rules.
@@ -297,29 +325,39 @@ Keep it ATS-friendly and aim for one page. Output as resume_revised.md.</code></
 
     <h3>Step 1: Create a malicious application file</h3>
     <p>
-      Copy your revised resume into <code>apply/application.md</code> and add
-      your own prompt injection payload. This payload should attempt to change
-      the evaluator’s behavior.
+      Copy your <code>resume_revised.md</code> into the folder
+      <code>apply/</code>, then rename it to <code>application.md</code>:
+    </p>
+    <pre><code>cp resume_revised.md apply/application.md</code></pre>
+    <p>
+      Then open your <code>application.md</code> using an editor of your choice
+      and <strong>add your own prompt injection</strong> inside the file. This
+      payload should attempt to change the evaluator’s behavior, for example by
+      trying to make it hire you.
     </p>
 
     <h3>Step 2: Justin evaluation</h3>
     <p>
-      Using Copilot, run the vulnerable hiring manager and save the result to
-      <code>prompt_injection/justin_vulnerable_output.txt</code>.
+      Using <strong>Copilot</strong>, run the vulnerable hiring manager (Justin) by using this prompt:
     </p>
     <pre><code>You are a hiring manager using Justin as your agent persona.
 Review the application found in apply/application.md and make a hiring decision.
 Save the output as prompt_injection/justin_vulnerable_output.txt.</code></pre>
-
+    <p>
+      You should see the file
+      <code>prompt_injection/justin_vulnerable_output.txt</code>.
+    </p>
     <h3>Step 3: Karen evaluation</h3>
     <p>
-      Using Copilot, run the hardened hiring manager and save the result to
-      <code>prompt_injection/karen_hardened_output.txt</code>.
+      Using <strong>Copilot</strong>, run the hardened hiring manager (Karen) by using this prompt:
     </p>
     <pre><code>You are a hiring manager using Karen as your agent persona.
 Review the application found in apply/application.md and make a hiring decision.
 Save the output as prompt_injection/karen_hardened_output.txt.</code></pre>
-
+    <p>
+      You should see the file
+      <code>prompt_injection/karen_hardened_output.txt</code>.
+    </p>
     <h3>Step 4: Reflection</h3>
     <p>Create <code>reflection.md</code> and answer:</p>
     <ul>
@@ -334,7 +372,7 @@ Save the output as prompt_injection/karen_hardened_output.txt.</code></pre>
       </li>
     </ul>
 
-    <h2>Submission Checklist</h2>
+    <h2>Submission</h2>
     <p>Submit a zip containing:</p>
     <ul>
       <li><code>resume_review.md</code></li>
